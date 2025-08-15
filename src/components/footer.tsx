@@ -5,7 +5,7 @@ import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone } from 'lucide-reac
 export default function Footer() {
     const navItems = [
         { name: 'Home', path: '/' },
-        { name: 'Services', path: '/services' },
+        { name: 'Services', path: '/service' },
         { name: 'Company', path: '/company' },
         { name: 'Industries', path: '/industries' },
         { name: 'Contact', path: '/contact' }
