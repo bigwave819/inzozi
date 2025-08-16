@@ -1,5 +1,5 @@
 // app/page.tsx
-import { Rocket, Code, Server, Shield } from "lucide-react";
+import { Rocket, Code, Server, Shield, Sprout, Music2, Ticket, Boxes, Car } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -28,28 +28,34 @@ export default function Home() {
 
   const products = [
     {
-      title: "Inzozi SAAS",
-      description:
-        "Cloud-based software solutions to streamline your business operations.",
-      demoLink: "#",
+      title: "Menya Muhinzi",
+      description: "A platform dedicated to agriculture, helping farmers access resources, tips, and market connections.",
+      icon: Sprout,
+      color: "#16A34A", // green
     },
     {
-      title: "Inzozi DAAS",
-      description:
-        "Real-time, structured data as a service to power smart decisions.",
-      demoLink: "#",
+      title: "Bruce Melody",
+      description: "A modern web platform for uploading and sharing music videos and branded merchandise.",
+      icon: Music2,
+      color: "#2563EB", // blue
     },
     {
-      title: "Digital Payment Gateway",
-      description:
-        "Secure and fast payment solutions for your business and customers.",
-      demoLink: "#",
+      title: "Itike",
+      description: "An online ticketing system for convenient and secure event and transport ticket payments.",
+      icon: Ticket,
+      color: "#EA580C", // orange
     },
     {
-      title: "IoT Platform",
-      description:
-        "Connect and monitor your devices seamlessly for smarter automation.",
-      demoLink: "#",
+      title: "Genzura",
+      description: "A management tool that helps organizations efficiently track and maintain their assets.",
+      icon: Boxes,
+      color: "#9333EA", // purple
+    },
+    {
+      title: "Zenguruka Umujyi",
+      description: "A smart platform that connects drivers and clients across Kigali and other Rwandan cities.",
+      icon: Car,
+      color: "#DC2626", // red
     },
   ];
 
@@ -88,6 +94,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* About Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 bg-white rounded-xl">
         <div className="lg:w-1/2">
@@ -145,7 +152,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/** Product section */}
+      {/* Products Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -157,22 +164,27 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition-all border border-gray-200"
+              className="bg-white shadow-lg rounded-2xl p-8 flex flex-col items-center text-center hover:shadow-2xl transition"
             >
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+              {/* Icon in Circle */}
+              <div
+                className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                style={{ backgroundColor: product.color }}
+              >
+                <product.icon className="w-10 h-10 text-white" />
+              </div>
+
+              {/* Title */}
+              <h3 className="text-2xl font-semibold text-gray-900 mb-3">
                 {product.title}
               </h3>
-              <p className="text-gray-600 mb-6">{product.description}</p>
-              <a
-                href={product.demoLink}
-                className="inline-block px-6 py-2 rounded-lg font-semibold text-white bg-[#2B4468] hover:bg-[#1f3151] transition"
-              >
-                View Demo
-              </a>
+
+              {/* Description */}
+              <p className="text-gray-600">{product.description}</p>
             </div>
           ))}
         </div>

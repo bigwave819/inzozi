@@ -1,20 +1,28 @@
+import { Card, CardContent } from "@/components/ui/card";
 type ProductCardProps = {
   title: string;
   description: string;
   demoLink: string;
 };
 
-export default function ProductCard({ title, description, demoLink }: ProductCardProps) {
+export default function ProductCard({ title, description, icon: Icon, color }: any) {
   return (
-    <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition-all border border-gray-200">
-      <h3 className="text-2xl font-semibold text-gray-900 mb-4">{title}</h3>
-      <p className="text-gray-600 mb-6">{description}</p>
-      <a
-        href={demoLink}
-        className="inline-block px-6 py-2 rounded-lg font-semibold text-white bg-[#2B4468] hover:bg-[#1f3151] transition"
+    <Card className="shadow-lg rounded-2xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
+      {/* Icon in Circle */}
+      <div
+        className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+        style={{ backgroundColor: color }}
       >
-        View Demo
-      </a>
-    </div>
+        <Icon className="w-10 h-10 text-white" />
+      </div>
+
+      {/* Title */}
+      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+
+      {/* Description */}
+      <CardContent>
+        <p className="text-gray-600">{description}</p>
+      </CardContent>
+    </Card>
   );
 }

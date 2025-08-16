@@ -1,37 +1,43 @@
+// app/products/page.tsx
+import { Sprout, Music2, Ticket, Boxes, Car } from "lucide-react";
 import ProductCard from "@/components/product-card";
 
 const products = [
   {
-    title: "Inzozi SAAS",
-    description: "Cloud-based software solutions to streamline your business operations.",
-    demoLink: "#"
+    title: "Menya Muhinzi",
+    description: "A platform dedicated to agriculture, helping farmers access resources, tips, and market connections.",
+    icon: Sprout,
+    color: "#16A34A", // green for agriculture
   },
   {
-    title: "Inzozi DAAS",
-    description: "Real-time, structured data as a service to power smart decisions.",
-    demoLink: "#"
+    title: "Bruce Melody",
+    description: "A modern web platform for uploading and sharing music videos and branded merchandise.",
+    icon: Music2,
+    color: "#2563EB", // blue for entertainment
   },
   {
-    title: "Digital Payment Gateway",
-    description: "Secure and fast payment solutions for your business and customers.",
-    demoLink: "#"
+    title: "Itike",
+    description: "An online ticketing system for convenient and secure event and transport ticket payments.",
+    icon: Ticket,
+    color: "#EA580C", // orange for payment
   },
   {
-    title: "IoT Platform",
-    description: "Connect and monitor your devices seamlessly for smarter automation.",
-    demoLink: "#"
+    title: "Genzura",
+    description: "A management tool that helps organizations efficiently track and maintain their assets.",
+    icon: Boxes,
+    color: "#9333EA", // purple for management
   },
   {
-    title: "Broad Services",
-    description: "Comprehensive solutions tailored to diverse business needs.",
-    demoLink: "#"
-  }
+    title: "Zenguruka Umujyi",
+    description: "A smart platform that connects drivers and clients across Kigali and other Rwandan cities.",
+    icon: Car,
+    color: "#DC2626", // red for transport
+  },
 ];
 
 export default function ProductsPage() {
   return (
     <div className="bg-gray-50 min-h-screen">
-      
       {/* Hero Section */}
       <section className="bg-[#2B4468] text-white py-20 px-6 text-center">
         <h1 className="text-5xl font-bold mb-4">Our Products</h1>
@@ -57,12 +63,12 @@ export default function ProductsPage() {
               key={index}
               title={product.title}
               description={product.description}
-              demoLink={product.demoLink}
+              icon={product.icon}
+              color={product.color}
             />
           ))}
         </div>
       </section>
-
     </div>
   );
 }
