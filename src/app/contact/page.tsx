@@ -10,23 +10,33 @@ import { Textarea } from "@/components/ui/textarea";
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await fetch("/api/contact", {
+      // Send email via Next.js App Router API
+      const res = await fetch("/pages/api/sendEmail", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          to: "waveb6133@gmail.com", // your email to receive messages
+          subject: `New message from ${form.name} (${form.email})`,
+          text: form.message,
+        }),
       });
 
       const data = await res.json();
-      setStatus(data.message);
-    } catch {
-      setStatus("Something went wrong.");
+      if (res.ok) {
+        setForm({ name: "", email: "", message: "" });
+        alert("email sent successfully")
+      } else {
+        alert("failed to send emails")
+      }
+    } catch (error) {
+      console.error(error);
+      alert("failed sendEmail")
     } finally {
       setLoading(false);
     }
@@ -72,7 +82,6 @@ export default function ContactPage() {
             >
               {loading ? "Sending..." : "Submit"}
             </Button>
-            {status && <p className="text-center mt-2">{status}</p>}
           </form>
         </CardContent>
       </Card>
