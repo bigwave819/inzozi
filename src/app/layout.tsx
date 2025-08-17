@@ -25,12 +25,12 @@ export const metadata: Metadata = {
   title: "Inzozi Labs - Innovative Software Solutions",
   description: "Discover innovative products from Inzozi Labs, including SAAS, DAAS, Digital Payment solutions, IoT platforms, and more.",
   keywords: ["Inzozi Labs", "SAAS", "DAAS", "IoT", "Digital Payment", "Software Solutions"],
-  authors: [{ name: "Hirwa Tresor Christian", url: "https://inzozilabs.onrender.com" }],
+  authors: [{ name: "Hirwa Tresor Christian", url: "https://inzozi.onrender.com" }],
   viewport: "width=device-width, initial-scale=1.0",
   openGraph: {
     title: "Inzozi Labs - Innovative Software Solutions",
     description: "Explore Inzozi Labs products and services to empower your business.",
-    url: "https://inzozilabs.onrender.com",
+    url: "https://inzozi.onrender.com",
     siteName: "Inzozi Labs",
     images: [
       {
