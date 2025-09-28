@@ -17,14 +17,10 @@ export default function ContactPage() {
 
     try {
       // Send email via Next.js App Router API
-      const res = await fetch("/pages/api/sendEmail", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          to: "waveb6133@gmail.com", // your email to receive messages
-          subject: `New message from ${form.name} (${form.email})`,
-          text: form.message,
-        }),
+        body: JSON.stringify(form),
       });
 
       const data = await res.json();
