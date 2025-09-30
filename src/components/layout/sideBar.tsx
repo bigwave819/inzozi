@@ -5,8 +5,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   LayoutDashboard,
-  CheckSquare,
-  Users,
+  UsersRound ,
+  FolderKanban ,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -18,8 +18,8 @@ function SideBar() {
 
   const links = [
     { id: 1, name: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
-    { id: 2, name: "Tasks", path: "/admin/tasks", icon: CheckSquare },
-    { id: 3, name: "Users", path: "/admin/users", icon: Users },
+    { id: 2, name: "employees", path: "/admin/employees", icon: UsersRound  },
+    { id: 3, name: "projects", path: "/admin/projects", icon: FolderKanban  },
     { id: 4, name: "Settings", path: "/admin/settings", icon: Settings },
   ];
 

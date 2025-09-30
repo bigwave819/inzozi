@@ -36,12 +36,16 @@ function LoginCard() {
     }
 
     try {
-      await signIn.email({
+      const res = await signIn.email({
         email,
         password,
       });
-      router.push("/admin/dashboard")
-      console.log("Signup success!");
+      if (res.error) {
+        setError(res.error.message || "Invalid credentials");
+        return;
+      }
+
+      router.push("/admin/dashboard");
     } catch (err) {
       console.error("Signup error:", err);
       setError("Error signing up. Please try again.");
