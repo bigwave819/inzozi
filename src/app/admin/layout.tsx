@@ -1,6 +1,3 @@
-
-
-
 import SideBar from '@/components/layout/sideBar'
 import { auth } from '@/lib/auth'
 import { headers } from 'next/headers'
@@ -16,14 +13,14 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
   if (!session) {
     redirect("/")
   }
+  
   return (
     <div className="flex">
       <SideBar />
-      <main className="flex-1 p-6 bg-[#fdfdfc] min-w-0 overflow-auto">
+      <main className="flex-1 p-4 lg:p-6 bg-[#fdfdfc] min-w-0 overflow-auto lg:ml-0">
         {children}
       </main>
     </div>
-
   )
 }
 
