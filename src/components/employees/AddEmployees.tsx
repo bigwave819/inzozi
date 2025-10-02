@@ -11,6 +11,7 @@ function AddEmployees() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const [open, setOpen] = useState(false);
 
   // 🔹 Call our Next.js API to get Cloudinary signature
   async function getCloudinarySignature() {
@@ -95,101 +96,114 @@ function AddEmployees() {
     };
 
     const result = await createEmployee(employeeData);
-    if (!result?.success) {
+    if (result?.success) {
+      setOpen(false); // Close dialog on success
+      // Reset form
+      formRef.current?.reset();
+      setImageFile(null);
+      setUploadProgress(0);
+      setUploadedUrl("");
+    } else {
       setError(result?.message || "Error creating employee.");
     }
   };
 
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger className="bg-[#2B4468] hover:bg-[#1f3350] cursor-pointer px-4 py-1 text-white">
         Add Employee +
       </Dialog.Trigger>
 
-      <Dialog.Overlay className="fixed inset-0 bg-black/50 p-4" />
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 bg-black/50 z-50" />
+        
+        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-md max-w-2xl w-[90vw] max-h-[85vh] overflow-y-auto shadow-lg z-50">
+          <Dialog.Title className="text-lg font-bold mb-4">Add Employee</Dialog.Title>
 
-      <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-md max-w-2xl sm:w-lg shadow-lg">
-        <Dialog.Title className="text-lg font-bold">Add Employee</Dialog.Title>
+          {error && <p className="text-red-600 mb-2">{error}</p>}
 
-        {error && <p className="text-red-600 mb-2">{error}</p>}
+          <form ref={formRef} onSubmit={handleSubmit}>
+            <div>
+              <label>Name</label>
+              <input
+                name="name"
+                type="text"
+                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
+                placeholder="Enter Name"
+                required
+              />
+            </div>
+            <div>
+              <label>Email</label>
+              <input
+                name="email"
+                type="email"
+                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
+                placeholder="Enter Email"
+                required
+              />
+            </div>
+            <div>
+              <label>Phone</label>
+              <input
+                name="phone"
+                type="text"
+                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
+                placeholder="Enter Number"
+                required
+              />
+            </div>
+            <div className="flex flex-col">
+              <label>Role</label>
+              <select
+                name="role"
+                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
+                required
+              >
+                <option value="">Select a role</option>
+                <option value="Backend">Backend</option>
+                <option value="Frontend">Frontend</option>
+                <option value="UI/UX Design">UI/UX Design</option>
+                <option value="Project Manager">Project Manager</option>
+                <option value="QA Manager">QA Manager</option>
+              </select>
+            </div>
 
-        <form ref={formRef} onSubmit={handleSubmit}>
-          <div>
-            <label>Name</label>
-            <input
-              name="name"
-              type="text"
-              className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
-              placeholder="Enter Name"
-            />
-          </div>
-          <div>
-            <label>Email</label>
-            <input
-              name="email"
-              type="email"
-              className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
-              placeholder="Enter Email"
-            />
-          </div>
-          <div>
-            <label>Phone</label>
-            <input
-              name="phone"
-              type="text"
-              className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
-              placeholder="Enter Number"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>Role</label>
-            <select
-              name="role"
-              className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
+            {/* Profile Image Upload */}
+            <div>
+              <label>Profile Image</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                className="mt-2 mb-3"
+              />
+              {loading && (
+                <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
+                  <div
+                    className="bg-blue-600 h-2 rounded-full"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-2 bg-[#2B4468] hover:bg-[#1f3350] text-white rounded-md disabled:opacity-50"
             >
-              <option value="">Select a role</option>
-              <option value="Backend">Backend</option>
-              <option value="Frontend">Frontend</option>
-              <option value="UI/UX Design">UI/UX Design</option>
-              <option value="Project Manager">Project Manager</option>
-              <option value="QA Manager">QA Manager</option>
-            </select>
+              {loading ? "Uploading..." : "Add Employee"}
+            </button>
+          </form>
+
+          <div className="mt-4 flex justify-end">
+            <Dialog.Close className="px-3 py-1 bg-gray-200 rounded-md">
+              Close
+            </Dialog.Close>
           </div>
-
-          {/* Profile Image Upload */}
-          <div>
-            <label>Profile Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-              className="mt-2 mb-3"
-            />
-            {loading && (
-              <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
-                <div
-                  className="bg-blue-600 h-2 rounded-full"
-                  style={{ width: `${uploadProgress}%` }}
-                />
-              </div>
-            )}
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-2 bg-[#2B4468] hover:bg-[#1f3350] text-white rounded-md disabled:opacity-50"
-          >
-            {loading ? "Uploading..." : "Add Employee"}
-          </button>
-        </form>
-
-        <div className="mt-4 flex justify-end">
-          <Dialog.Close className="px-3 py-1 bg-gray-200 rounded-md">
-            Close
-          </Dialog.Close>
-        </div>
-      </Dialog.Content>
+        </Dialog.Content>
+      </Dialog.Portal>
     </Dialog.Root>
   );
 }

@@ -1,14 +1,18 @@
 import AddEmployees from "@/components/employees/AddEmployees";
+import ViewEmployees from "@/components/employees/ViewEmployees";
 
 function Employees() {
-  
-      
+
+
 
   return (
-    <div className="w-full min-h-screen p-8 bg-gray-50">
-      <div className="flex justify-between">
-        <div><h1 className="font-bold text-2xl">Employees</h1></div>
-        <div className="p-5"><AddEmployees /></div>
+    <div className="w-full min-h-screen p-8">
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="font-bold text-2xl">Employees</h1>
+        <AddEmployees />
+      </div>
+      <div>
+        <ViewEmployees />
       </div>
     </div>
   );

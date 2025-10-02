@@ -4,10 +4,13 @@ import {
   UsersRound ,
   FolderKanban, 
 } from "lucide-react";
+import { getTotalEmployees } from "@/actions/adminActions"
 
 
 
 async function dashboard() {
+
+    const totalEmployees = await getTotalEmployees()
 
     const details = [
         {
@@ -15,7 +18,7 @@ async function dashboard() {
             label: "Total Employees",
             icon: UsersRound,
             description: 'All registered Employees here',
-            total: 3
+            total: totalEmployees
         },
         {
             id: 2,

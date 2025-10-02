@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
-import z from "zod"
+import z, { success } from "zod"
 
 const employeeSchema = z.object({
     name: z.string().min(2, 'the minimum character is 2'),
@@ -72,5 +72,43 @@ export async function createEmployee(data: unknown) {
             success: false,
             message: 'Failed to add the employee'
         }
+    }
+}
+
+export async function getEmployees() {
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if (!session?.user) {
+        redirect('/')
+    }
+
+    try {
+        const emp = await prisma.employees.findMany({
+            orderBy: { createdAt: 'desc' }
+        })
+
+        return emp
+    } catch (error) {
+        console.error(error);
+        return []
+    }
+}
+
+export async function getTotalEmployees() {
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if (!session?.user) {
+        redirect('/')
+    }
+    try {
+        const totalDocuments = await prisma.employees.count()
+
+        return totalDocuments
+    } catch (error) {
+        console.error(error);
     }
 }
