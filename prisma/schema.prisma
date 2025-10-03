@@ -74,32 +74,30 @@ model Verification {
   @@map("verification")
 }
 
-
 model Employees {
-  id String @id @default(cuid())
-  name String
-  email String @unique
-  phone String
-  role String
-  imageUrl String
-  projectId String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  project Project? @relation(fields: [projectId],references: [id], onDelete: Cascade)
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  phone     String
+  role      String
+  imageUrl  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  projects  Project[] // Many-to-many relationship
 }
 
 model Project {
-  id String @id @default(cuid())
-  name String
-  logo String?
+  id        String        @id @default(cuid())
+  name      String        @unique
+  logo      String?
   startDate DateTime
-  endDate DateTime?
-  employees Employees[]
-  status ProjectStatus @default(PENDING)
-  details String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  endDate   DateTime?
+  price     String
+  employees Employees[]   // Many-to-many relationship
+  status    ProjectStatus @default(PENDING)
+  details   String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }
 
 enum ProjectStatus {

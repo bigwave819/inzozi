@@ -29,10 +29,10 @@ export async function createEmployee(data: unknown) {
 
         if (!result.success) {
             console.log('Validation error:', result.error.format()); // Add logging
-            return { 
+            return {
                 success: false,
                 message: 'Validation failed',
-                error: result.error.format() 
+                error: result.error.format()
             }
         }
 
@@ -51,18 +51,18 @@ export async function createEmployee(data: unknown) {
         }
 
         const employee = await prisma.employees.create({
-            data: { 
-                name, 
-                email, 
-                phone, 
-                role, 
+            data: {
+                name,
+                email,
+                phone,
+                role,
                 imageUrl: image // Map 'image' from form to 'imageUrl' in database
             }
         })
 
         revalidatePath('/admin/employees')
 
-        return { 
+        return {
             success: true,
             message: 'Employee created successfully'
         }
@@ -110,5 +110,71 @@ export async function getTotalEmployees() {
         return totalDocuments
     } catch (error) {
         console.error(error);
+    }
+}
+
+export async function createProject(data: {
+    name: string
+    logo?: string
+    startDate: string
+    endDate?: string
+    price: string
+    employees: string[]
+    details: string
+}) {
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if (!session?.user) {
+        redirect('/')
+    }
+    try {
+        const project = await prisma.project.create({
+            data: {
+                name: data.name,
+                logo: data.logo,
+                startDate: new Date(data.startDate),
+                endDate: data.endDate ? new Date(data.endDate) : null,
+                price: data.price,
+                details: data.details,
+                employees: {
+                    connect: data.employees.map((id) => ({ id })),
+                },
+            },
+            include: {
+                employees: true, // Include employees in response
+            },
+        })
+
+        revalidatePath('/admin/projects')
+        return { success: true, project }
+    } catch (error) {
+        console.error("Error creating project:", error)
+        return { success: false, error }
+    }
+}
+
+export async function getProjects() {
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if (!session?.user) {
+        redirect('/')
+    }
+
+    try {
+        const projects = await prisma.project.findMany({
+            include: {
+                employees: true, // ✅ include assigned employees
+            },
+            orderBy: { createdAt: "desc" },
+        });
+
+        return projects;
+    } catch (error) {
+        console.error(error);
+        return []
     }
 }

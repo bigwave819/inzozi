@@ -38,10 +38,10 @@ function AddEmployees() {
       data.append("api_key", apiKey);
       data.append("timestamp", timestamp.toString());
       data.append("signature", signature);
-      data.append("folder", folder);
+      data.append('folder', 'inzozi-employees');
 
       const xhr = new XMLHttpRequest();
-      xhr.open("POST", `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`);
+      xhr.open("POST", `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/auto/upload`);
 
       xhr.upload.addEventListener("progress", (e) => {
         if (e.lengthComputable) {
@@ -115,8 +115,8 @@ function AddEmployees() {
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/50 z-50" />
         
+        <Dialog.Overlay className="fixed inset-0 bg-black/40" />
         <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-md max-w-2xl w-[90vw] max-h-[85vh] overflow-y-auto shadow-lg z-50">
           <Dialog.Title className="text-lg font-bold mb-4">Add Employee</Dialog.Title>
 
