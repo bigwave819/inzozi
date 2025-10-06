@@ -1,11 +1,18 @@
 import { Card, CardContent } from "@/components/ui/card";
+
 type ProductCardProps = {
   title: string;
   description: string;
-  demoLink: string;
+  icon: React.ComponentType<{ className?: string }>;
+  color: string;
 };
 
-export default function ProductCard({ title, description, icon: Icon, color }: any) {
+export default function ProductCard({ 
+  title, 
+  description, 
+  icon: Icon, 
+  color 
+}: ProductCardProps) {
   return (
     <Card className="shadow-lg rounded-2xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
       {/* Icon in Circle */}

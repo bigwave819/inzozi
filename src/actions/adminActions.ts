@@ -1,11 +1,12 @@
 'use server'
 
+import { ProjectStatus } from "@/generated/prisma"
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
-import z, { success } from "zod"
+import z from "zod"
 
 const employeeSchema = z.object({
     name: z.string().min(2, 'the minimum character is 2'),
@@ -56,7 +57,7 @@ export async function createEmployee(data: unknown) {
                 email,
                 phone,
                 role,
-                imageUrl: image // Map 'image' from form to 'imageUrl' in database
+                imageUrl: image 
             }
         })
 
@@ -64,7 +65,7 @@ export async function createEmployee(data: unknown) {
 
         return {
             success: true,
-            message: 'Employee created successfully'
+            employee
         }
     } catch (error) {
         console.error('Database error:', error);
@@ -177,4 +178,109 @@ export async function getProjects() {
         console.error(error);
         return []
     }
+}
+
+export async function getSingleProject(id: string) {
+    try {
+        const project = await prisma.project.findUnique({
+            where: { id },
+            include: { employees: true },
+        });
+
+        if (!project) return null;
+
+        return {
+            ...project,
+            startDate: project.startDate, // Keep as Date object
+            endDate: project.endDate, // Keep as Date object or null
+            employees: project.employees.map((e) => ({
+                id: e.id,
+                name: e.name,
+                role: e.role,
+                imageUrl: e.imageUrl
+            })),
+        };
+    } catch (error) {
+        console.error('Error fetching project:', error);
+        return null;
+    }
+}
+
+export async function updateStatus(id: string,
+    newStatus: ProjectStatus) {
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if (!session?.user) {
+        redirect('/admin/projects')
+    }
+
+    try {
+        const updated = await prisma.project.update({
+            where: { id },
+            data: { status: newStatus }
+        })
+        revalidatePath("/admin/projects");
+        return { success: true, updated }
+    } catch (error) {
+        console.error(error);
+        return {
+            sussess: false,
+            message: 'failed to update the project'
+        }
+    }
+}
+
+export async function getEmployeesByRole() {
+    const result = await prisma.employees.groupBy({
+        by: ["role"],
+        _count: { role: true }
+    })
+
+    return result.map((item) => ({
+        role: item.role,
+        count: item._count.role
+    }))
+}
+
+export async function getProjectsByStatus() {
+    const result = await prisma.project.groupBy({
+        by: ['status'],
+        _count: { status: true }
+    })
+
+    return result.map((item) => ({
+        status: item.status,
+        count: item._count.status
+    }))
+}
+
+export async function getProjectsPerMonth() {
+    const result = await prisma.$queryRaw`
+    SELECT
+      TO_CHAR("startDate", 'Mon YYYY') AS month,
+      COUNT(*) AS count
+    FROM "Project"
+    GROUP BY month
+    ORDER BY MIN("startDate");
+  `;
+
+    return result; // [{ month: 'Jan 2025', count: 4 }, ...]
+}
+
+export async function getTopEmployeesByProjects(limit = 5) {
+    const result = await prisma.employees.findMany({
+        include: { projects: true },
+    });
+
+    const ranked = result
+        .map((emp) => ({
+            name: emp.name,
+            projectsCount: emp.projects.length,
+        }))
+        .sort((a, b) => b.projectsCount - a.projectsCount)
+        .slice(0, limit);
+
+    return ranked;
 }

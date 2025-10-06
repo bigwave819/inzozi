@@ -124,3 +124,7 @@
 /* .my-element {
   font-family: var(--font-poppins);
 } */
+
+body {
+  font-family: var(--font-quicksand), sans-serif;
+}

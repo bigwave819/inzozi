@@ -29,8 +29,7 @@ function AddEmployees() {
   // 🔹 Upload with progress
   async function uploadToCloudinary(file: File) {
     setLoading(true);
-    const { signature, timestamp, apiKey, cloudName, folder } =
-      await getCloudinarySignature();
+    const { signature, timestamp, apiKey } = await getCloudinarySignature();
 
     return new Promise<string>((resolve, reject) => {
       const data = new FormData();
@@ -57,10 +56,14 @@ function AddEmployees() {
           resolve(res.secure_url);
         } else {
           reject(res.error?.message || "Upload failed");
+          setLoading(false);
         }
       };
 
-      xhr.onerror = () => reject("Network error during upload");
+      xhr.onerror = () => {
+        setLoading(false);
+        reject("Network error during upload");
+      };
       xhr.send(data);
     });
   }
@@ -75,6 +78,7 @@ function AddEmployees() {
       try {
         imageUrl = await uploadToCloudinary(imageFile);
       } catch (err) {
+        console.error("Upload error:", err);
         setError("Failed to upload image");
         return;
       }

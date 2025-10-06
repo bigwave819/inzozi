@@ -1,7 +1,6 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
 
 function CompanyPage() {
-
     const contents = [
         {
             id: 1,
@@ -54,10 +53,16 @@ function CompanyPage() {
             {/* Leadership Section */}
             <h1 className="text-2xl text-center font-bold text-[#2B4468] underline">Leadership</h1>
             <div className="w-full space-y-16 max-w-5xl mt-5 mb-10">
-                {identities.map((i) =>
+                {identities.map((i) => (
                     <div key={i.id} className="grid grid-cols-1 md:grid-cols-3 gap-20 p-10 rounded-xl shadow-lg bg-gray-50">
                         <div className="flex items-center justify-center">
-                            <img src={i.image} alt={i.name} className="h-60 w-60 rounded-full object-cover"/>
+                            <Image 
+                                src={i.image} 
+                                alt={i.name} 
+                                width={240}
+                                height={240}
+                                className="h-60 w-60 rounded-full object-cover"
+                            />
                         </div>
                         <div className="flex flex-col space-y-3">
                             <h1 className="text-[#2B4468] text-2xl font-bold">{i.name}</h1>
@@ -66,7 +71,7 @@ function CompanyPage() {
                             <p className="font-bold">{i.email}</p>
                         </div>
                     </div>
-                )}
+                ))}
             </div>
         </div>
     );

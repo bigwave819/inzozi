@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 function IndustriesPage() {
   const industries = [
     {
@@ -31,39 +33,42 @@ function IndustriesPage() {
   ];
 
   return (
-    <div className="min-h-screen w-full flex flex-col space-y-2 items-center p-5">
-      <h1 className="font-bold text-[#2B4468] text-2xl">Industries</h1>
-      <p className="mt-2 text-center max-w-4xl">
+    <div className="min-h-screen w-full flex flex-col space-y-4 items-center p-5">
+      <h1 className="font-bold text-[#2B4468] text-3xl md:text-4xl">Industries</h1>
+      <p className="mt-2 text-center max-w-4xl text-gray-700">
         Technology enablers. In different industries we seek to empower businesses
         to develop strategies of transformation with the aim to move to a
         data-centric business model. We are committed to being at the forefront
         of digital transformation both in Rwanda and beyond.
       </p>
 
-      <div className="space-y-5 p-5 w-full items-center">
+      <div className="space-y-6 p-5 w-full">
         {industries.map((i) => (
           <div
             key={i.id}
-            className="max-w-5xl mx-auto bg-gray-50 grid grid-cols-1 md:grid-cols-3 gap-8 p-5 rounded-lg shadow-md 
+            className="max-w-5xl mx-auto bg-gray-50 grid grid-cols-1 md:grid-cols-3 gap-6 p-5 rounded-lg shadow-md 
                        hover:shadow-lg hover:scale-[1.02] transition-transform duration-300 ease-in-out cursor-pointer"
           >
             {/* Icon */}
             <div className="flex justify-center items-center">
-              <img
-                src={i.icon}
-                alt={i.title}
-                className="w-40 h-40 object-contain"
-              />
+              <div className="relative w-32 h-32 md:w-40 md:h-40">
+                <Image
+                  src={i.icon}
+                  alt={i.title}
+                  fill
+                  className="object-contain"
+                />
+              </div>
             </div>
 
-            {/* Centered Title */}
+            {/* Title */}
             <div className="flex justify-center items-center text-center">
-              <h1 className="text-2xl text-[#AA8300] font-bold">{i.title}</h1>
+              <h1 className="text-xl md:text-2xl text-[#AA8300] font-bold">{i.title}</h1>
             </div>
 
             {/* Description */}
             <div className="flex items-center">
-              <p className="text-muted-foreground">{i.description}</p>
+              <p className="text-gray-600">{i.description}</p>
             </div>
           </div>
         ))}

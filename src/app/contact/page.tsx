@@ -23,16 +23,16 @@ export default function ContactPage() {
         body: JSON.stringify(form),
       });
 
-      const data = await res.json();
+      await res.json();
       if (res.ok) {
         setForm({ name: "", email: "", message: "" });
-        alert("email sent successfully")
+        alert("Email sent successfully");
       } else {
-        alert("failed to send emails")
+        alert("Failed to send email");
       }
     } catch (error) {
-      console.error(error);
-      alert("failed sendEmail")
+      console.error("Email sending error:", error);
+      alert("Failed to send email");
     } finally {
       setLoading(false);
     }

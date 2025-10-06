@@ -9,7 +9,7 @@ async function ViewEmployees() {
                 result.map((item) => {
                     return (
                         <div key={item.id} className="bg-blue-50 shadow-lg hover:shadow-2xl">
-                            <div className="h-48 bg-slate-100 relative">
+                            <div className="h-72 bg-slate-100 relative">
                                 <Image
                                     src={item.imageUrl}
                                     alt={item.name}

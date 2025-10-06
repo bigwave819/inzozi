@@ -5,8 +5,18 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useState, useRef, useEffect } from "react";
 import { getEmployees } from "@/actions/adminActions";
 
+interface Employee {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  role: string;
+  imageUrl: string;
+  createdAt: Date;
+}
+
 function AddProjects() {
-    const [employees, setEmployees] = useState<any[]>([]);
+    const [employees, setEmployees] = useState<Employee[]>([]);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [uploadedUrl, setUploadedUrl] = useState("");
@@ -98,7 +108,7 @@ function AddProjects() {
             try {
                 logoUrl = await uploadToCloudinary(imageFile);
             } catch (err) {
-                setError("Failed to upload logo");
+                setError("Failed to upload logo" + err);
                 return;
             }
         }

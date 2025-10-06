@@ -17,6 +17,19 @@ export default async function Navbar() {
   ];
 
   return (
-        <NavbarClient session={session} navItems={navItems} />
+    <NavbarClient
+      session={
+        session
+          ? {
+            ...session,
+            user: {
+              ...session.user,
+              image: session.user?.image ?? undefined, // 🔥 converts null → undefined
+            },
+          }
+          : null
+      }
+      navItems={navItems}
+    />
   );
 }
