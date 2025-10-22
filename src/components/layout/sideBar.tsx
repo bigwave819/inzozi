@@ -31,8 +31,7 @@ function SideBar() {
     setLoading(true);
     try {
       await signOut();
-      router.refresh();
-      router.push("/login");
+      window.location.href='/login';
     } catch (error) {
       console.error("Error signing out:", error);
     } finally {

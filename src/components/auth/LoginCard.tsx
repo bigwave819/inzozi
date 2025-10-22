@@ -40,7 +40,7 @@ export default function LoginCard() {
         return;
       }
 
-      router.push("/admin/dashboard");
+      window.location.href='/admin/dashboard';
     } catch (err) {
       console.error("Signup error:", err);
       setError("Error signing up. Please try again.");
@@ -50,7 +50,6 @@ export default function LoginCard() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="max-w-xl w-2xl shadow-xl p-8 space-y-6 bg-white rounded-lg">
         {/* Title */}
         <div className="text-center">
@@ -97,6 +96,5 @@ export default function LoginCard() {
           </button>
         </form>
       </div>
-    </div>
   );
 }
