@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { updateStatus } from "@/actions/adminActions";
-import { ProjectStatus } from "@/generated/prisma";
+import { ProjectStatus } from "@prisma/client";
 import Image from "next/image";
 import { Calendar, Users, FileText, Target, CheckCircle, XCircle, Clock, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
