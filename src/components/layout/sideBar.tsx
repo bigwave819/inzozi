@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   UsersRound,
@@ -15,7 +15,6 @@ import {
 import { signOut } from "@/lib/auth-client";
 
 function SideBar() {
-  const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);

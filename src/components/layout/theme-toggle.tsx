@@ -5,8 +5,8 @@ import { useTheme } from 'next-themes'
 import { Moon, Sun } from "lucide-react";
 
 function ThemeToggle() {
-    const { isDarkMode, toggleTheme, setDarkMode } = useThemeStore();
-    const { theme, setTheme, resolvedTheme } = useTheme();
+    const { isDarkMode, setDarkMode } = useThemeStore();
+    const { setTheme, resolvedTheme } = useTheme();
 
     // Sync Zustand store with next-themes
     useEffect(() => {

@@ -1,7 +1,6 @@
 "use client";
 
 import { signIn } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -14,7 +13,6 @@ const signUpSchema = z.object({
 export default function LoginCard() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -8,7 +8,7 @@ import { useThemeStore } from '@/store/theme-store';
 import { useTheme } from 'next-themes';
 
 export default function AdminSettingsPage() {
-  const { isDarkMode, toggleTheme, setDarkMode } = useThemeStore();
+  const { isDarkMode, setDarkMode } = useThemeStore();
   const { setTheme } = useTheme();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [mounted, setMounted] = useState(false);
