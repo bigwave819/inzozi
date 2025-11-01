@@ -14,7 +14,7 @@ export default function ProductCard({
   color 
 }: ProductCardProps) {
   return (
-    <Card className="shadow-lg rounded-2xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
+    <Card className="shadow-lg dark:shadow-gray-900/50 rounded-2xl p-6 flex flex-col items-center text-center hover:shadow-xl dark:hover:shadow-gray-800/70 transition-all duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:scale-105">
       {/* Icon in Circle */}
       <div
         className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
@@ -24,11 +24,11 @@ export default function ProductCard({
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h3>
 
       {/* Description */}
-      <CardContent>
-        <p className="text-gray-600">{description}</p>
+      <CardContent className="p-0">
+        <p className="text-gray-600 dark:text-gray-400">{description}</p>
       </CardContent>
     </Card>
   );

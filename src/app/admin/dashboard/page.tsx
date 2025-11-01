@@ -70,7 +70,7 @@ export default function Dashboard() {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   return (
-    <div className="w-full min-h-screen p-6 md:p-10 flex flex-col gap-10 bg-gray-50">
+    <div className="w-full min-h-screen p-6 md:p-10 bg-white dark:bg-gray-950 flex flex-col gap-10">
       {/* ✅ Summary Cards */}
       <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
         {details.map((item) => {
@@ -78,16 +78,16 @@ export default function Dashboard() {
           return (
             <div
               key={item.id}
-              className="bg-white border border-gray-200 rounded-xl p-5 h-44 shadow-sm hover:shadow-md transition"
+              className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5 h-44 shadow-sm hover:shadow-md dark:hover:shadow-gray-800 transition-all"
             >
               <div className="flex items-center gap-3 mb-3">
-                <Icon size={36} className="text-[#2B4468]" />
-                <h1 className="font-semibold text-[#2B4468] text-lg">
+                <Icon size={36} className="text-[#2B4468] dark:text-blue-400" />
+                <h1 className="font-semibold text-[#2B4468] dark:text-blue-400 text-lg">
                   {item.label}
                 </h1>
               </div>
-              <p className="text-gray-500 mb-2">{item.description}</p>
-              <h1 className="text-3xl font-bold text-[#2B4468]">{item.total}</h1>
+              <p className="text-gray-500 dark:text-gray-400 mb-2">{item.description}</p>
+              <h1 className="text-3xl font-bold text-[#2B4468] dark:text-blue-400">{item.total}</h1>
             </div>
           );
         })}
@@ -96,16 +96,30 @@ export default function Dashboard() {
       {/* ✅ Charts Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         {/* Employees per Role (Bar) */}
-        <div className="p-4 bg-white rounded-xl shadow-md">
-          <h2 className="text-lg font-semibold mb-4 text-gray-700">
+        <div className="p-4 bg-white dark:bg-gray-900 rounded-xl shadow-md dark:shadow-gray-800 border border-gray-200 dark:border-gray-700">
+          <h2 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">
             Employees per Role
           </h2>
           <div className="w-full h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={employeesByRole}>
-                <XAxis dataKey="role" />
-                <YAxis />
-                <Tooltip />
+                <XAxis 
+                  dataKey="role" 
+                  stroke="#6B7280"
+                  fontSize={12}
+                />
+                <YAxis 
+                  stroke="#6B7280"
+                  fontSize={12}
+                />
+                <Tooltip 
+                  contentStyle={{
+                    backgroundColor: 'rgb(17, 24, 39)',
+                    border: '1px solid rgb(55, 65, 81)',
+                    borderRadius: '0.5rem',
+                    color: 'rgb(243, 244, 246)'
+                  }}
+                />
                 <Legend />
                 <Bar dataKey="count" fill="#8884d8" />
               </BarChart>
@@ -114,8 +128,8 @@ export default function Dashboard() {
         </div>
 
         {/* Projects by Status (Pie) */}
-        <div className="p-4 bg-white rounded-xl shadow-md">
-          <h2 className="text-lg font-semibold mb-4 text-gray-700">
+        <div className="p-4 bg-white dark:bg-gray-900 rounded-xl shadow-md dark:shadow-gray-800 border border-gray-200 dark:border-gray-700">
+          <h2 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">
             Projects by Status
           </h2>
           <div className="w-full h-64">
@@ -128,7 +142,7 @@ export default function Dashboard() {
                   cx="50%"
                   cy="50%"
                   outerRadius="80%"
-                  label
+                  label={({ status, count }) => `${status}: ${count}`}
                 >
                   {projectsByStatus.map((entry, index) => (
                     <Cell
@@ -137,7 +151,14 @@ export default function Dashboard() {
                     />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip 
+                  contentStyle={{
+                    backgroundColor: 'rgb(17, 24, 39)',
+                    border: '1px solid rgb(55, 65, 81)',
+                    borderRadius: '0.5rem',
+                    color: 'rgb(243, 244, 246)'
+                  }}
+                />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>

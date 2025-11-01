@@ -37,19 +37,19 @@ const products = [
 
 export default function ProductsPage() {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 dark:bg-gray-950 min-h-screen transition-colors duration-200">
       {/* Hero Section */}
-      <section className="bg-[#2B4468] text-white py-20 px-6 text-center">
+      <section className="bg-[#2B4468] dark:bg-gradient-to-br dark:from-gray-900 dark:to-blue-900 text-white py-20 px-6 text-center transition-colors duration-200">
         <h1 className="text-5xl font-bold mb-4">Our Products</h1>
-        <p className="text-xl max-w-2xl mx-auto text-gray-200">
+        <p className="text-xl max-w-2xl mx-auto text-gray-200 dark:text-gray-300">
           Explore innovative solutions crafted by Inzozi Labs to empower your business and achieve your goals.
         </p>
       </section>
 
       {/* Description Section */}
       <section className="py-12 px-6 text-center max-w-5xl mx-auto">
-        <p className="text-lg text-gray-700 mb-4">
-          At Inzozi Labs, we build products that combine <span className="text-[#2B4468] font-semibold">technology</span> 
+        <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+          At Inzozi Labs, we build products that combine <span className="text-[#2B4468] dark:text-blue-400 font-semibold">technology</span> 
           and <span className="text-[#FFD166] font-semibold">innovation</span> to deliver results that matter. 
           Each product is designed with <span className="text-[#06B6D4] font-semibold">usability</span> and <span className="text-[#EF4444] font-semibold">efficiency</span> in mind.
         </p>

@@ -30,7 +30,7 @@ export default async function Footer() {
     }
 
     return (
-        <footer className="w-full text-white" style={{ backgroundColor: '#2B4468' }}>
+        <footer className="w-full text-white bg-[#2B4468] dark:bg-gray-900 transition-colors duration-200">
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Navigation Links */}
@@ -39,7 +39,7 @@ export default async function Footer() {
                         <ul className="space-y-2">
                             {navItems.map((item) => (
                                 <li key={item.name}>
-                                    <Link href={item.path} className="hover:text-blue-200 transition-colors">
+                                    <Link href={item.path} className="hover:text-blue-200 transition-colors duration-200">
                                         {item.name}
                                     </Link>
                                 </li>
@@ -72,7 +72,7 @@ export default async function Footer() {
                                     href={social.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:text-blue-200 transition-colors"
+                                    className="hover:text-blue-200 transition-colors duration-200 transform hover:scale-110"
                                     aria-label={`${social.url.split('//')[1].split('.')[0]} link`}
                                 >
                                     {social.icon}
@@ -84,15 +84,15 @@ export default async function Footer() {
                     {/* About/Copyright */}
                     <div>
                         <h3 className="text-lg font-semibold mb-4">About</h3>
-                        <p className="mb-4">
+                        <p className="mb-4 opacity-90">
                             We provide innovative solutions to help your business grow and succeed in the digital world.
                         </p>
                     </div>
                 </div>
             </div>
-            <hr className='mr-20 ml-10' />
-            <div className='max-w-5xl flex justify-center'>
-                <p className="text-sm opacity-80 mb-5 mt-5">
+            <hr className="border-gray-600 dark:border-gray-700 mx-10" />
+            <div className="flex justify-center py-5">
+                <p className="text-sm opacity-80">
                     © {new Date().getFullYear()} Inzozi labs. All rights reserved.
                 </p>
             </div>

@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { Quicksand } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -21,11 +22,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={quicksand.className}>
-      <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+    <html lang="en" className={quicksand.className} suppressHydrationWarning>
+      <body className="bg-white dark:bg-gray-950 transition-colors duration-200">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

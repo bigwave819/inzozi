@@ -114,54 +114,55 @@ function AddEmployees() {
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger className="bg-[#2B4468] hover:bg-[#1f3350] cursor-pointer px-4 py-1 text-white">
+      <Dialog.Trigger className="bg-[#2B4468] dark:bg-blue-600 hover:bg-[#1f3350] dark:hover:bg-blue-700 cursor-pointer px-4 py-1 text-white rounded transition-colors">
         Add Employee +
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        
-        <Dialog.Overlay className="fixed inset-0 bg-black/40" />
-        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-md max-w-2xl w-[90vw] max-h-[85vh] overflow-y-auto shadow-lg z-50">
-          <Dialog.Title className="text-lg font-bold mb-4">Add Employee</Dialog.Title>
+        <Dialog.Overlay className="fixed inset-0 bg-black/40 dark:bg-black/60" />
+        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-900 p-6 rounded-md max-w-2xl w-[90vw] max-h-[85vh] overflow-y-auto shadow-lg z-50 border border-gray-200 dark:border-gray-700">
+          <Dialog.Title className="text-lg font-bold mb-4 text-gray-900 dark:text-gray-100">
+            Add Employee
+          </Dialog.Title>
 
-          {error && <p className="text-red-600 mb-2">{error}</p>}
+          {error && <p className="text-red-600 dark:text-red-400 mb-2">{error}</p>}
 
           <form ref={formRef} onSubmit={handleSubmit}>
             <div>
-              <label>Name</label>
+              <label className="text-gray-700 dark:text-gray-300">Name</label>
               <input
                 name="name"
                 type="text"
-                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
+                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#2B4468] dark:focus:ring-blue-400 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded border border-gray-300 dark:border-gray-600 transition-colors"
                 placeholder="Enter Name"
                 required
               />
             </div>
             <div>
-              <label>Email</label>
+              <label className="text-gray-700 dark:text-gray-300">Email</label>
               <input
                 name="email"
                 type="email"
-                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
+                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#2B4468] dark:focus:ring-blue-400 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded border border-gray-300 dark:border-gray-600 transition-colors"
                 placeholder="Enter Email"
                 required
               />
             </div>
             <div>
-              <label>Phone</label>
+              <label className="text-gray-700 dark:text-gray-300">Phone</label>
               <input
                 name="phone"
                 type="text"
-                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
+                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#2B4468] dark:focus:ring-blue-400 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded border border-gray-300 dark:border-gray-600 transition-colors"
                 placeholder="Enter Number"
                 required
               />
             </div>
             <div className="flex flex-col">
-              <label>Role</label>
+              <label className="text-gray-700 dark:text-gray-300">Role</label>
               <select
                 name="role"
-                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 focus:outline-none"
+                className="w-full px-3 py-2 mt-2 mb-3 bg-blue-50 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#2B4468] dark:focus:ring-blue-400 text-gray-900 dark:text-gray-100 rounded border border-gray-300 dark:border-gray-600 transition-colors"
                 required
               >
                 <option value="">Select a role</option>
@@ -175,17 +176,17 @@ function AddEmployees() {
 
             {/* Profile Image Upload */}
             <div>
-              <label>Profile Image</label>
+              <label className="text-gray-700 dark:text-gray-300">Profile Image</label>
               <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-                className="mt-2 mb-3"
+                className="mt-2 mb-3 text-gray-700 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#2B4468] dark:file:bg-blue-600 file:text-white hover:file:bg-[#1f3350] dark:hover:file:bg-blue-700 transition-colors"
               />
               {loading && (
-                <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-3">
                   <div
-                    className="bg-blue-600 h-2 rounded-full"
+                    className="bg-blue-600 dark:bg-blue-500 h-2 rounded-full transition-all duration-300"
                     style={{ width: `${uploadProgress}%` }}
                   />
                 </div>
@@ -195,14 +196,14 @@ function AddEmployees() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 bg-[#2B4468] hover:bg-[#1f3350] text-white rounded-md disabled:opacity-50"
+              className="w-full py-2 bg-[#2B4468] dark:bg-blue-600 hover:bg-[#1f3350] dark:hover:bg-blue-700 text-white rounded-md disabled:opacity-50 transition-colors"
             >
               {loading ? "Uploading..." : "Add Employee"}
             </button>
           </form>
 
           <div className="mt-4 flex justify-end">
-            <Dialog.Close className="px-3 py-1 bg-gray-200 rounded-md">
+            <Dialog.Close className="px-3 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-md transition-colors">
               Close
             </Dialog.Close>
           </div>

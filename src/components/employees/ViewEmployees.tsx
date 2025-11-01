@@ -8,21 +8,21 @@ async function ViewEmployees() {
             {
                 result.map((item) => {
                     return (
-                        <div key={item.id} className="bg-blue-50 shadow-lg hover:shadow-2xl">
-                            <div className="h-72 bg-slate-100 relative">
+                        <div key={item.id} className="bg-blue-50 dark:bg-gray-800 shadow-lg hover:shadow-2xl dark:shadow-gray-700/30 rounded-lg overflow-hidden transition-all duration-300 hover:scale-105">
+                            <div className="h-72 bg-slate-100 dark:bg-gray-700 relative">
                                 <Image
                                     src={item.imageUrl}
                                     alt={item.name}
                                     fill
                                     unoptimized
-                                    className="object-center"
+                                    className="object-cover"
                                 />
                             </div>
-                            <div className="w-fullm p-5">
-                                <h1 className="text-2xl font-bold text-[#2B4468]">{item.name}</h1>
-                                <h2 className="font-bold text-xl text-[#2B4468]">{item.role} Developer</h2>
-                                <p className="text-muted-foreground">{item.email}</p>
-                                <p className="text-muted-foreground">{item.phone}</p>
+                            <div className="w-full p-5">
+                                <h1 className="text-2xl font-bold text-[#2B4468] dark:text-blue-400">{item.name}</h1>
+                                <h2 className="font-bold text-xl text-[#2B4468] dark:text-blue-400">{item.role} Developer</h2>
+                                <p className="text-muted-foreground dark:text-gray-400">{item.email}</p>
+                                <p className="text-muted-foreground dark:text-gray-400">{item.phone}</p>
                             </div>
                         </div>
                     )

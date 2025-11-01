@@ -36,39 +36,39 @@ function CompanyPage() {
     ];
 
     return (
-        <div className="w-full min-h-screen flex flex-col items-center justify-center p-5">
+        <div className="w-full min-h-screen flex flex-col items-center justify-center p-5 bg-white dark:bg-gray-950 transition-colors duration-200">
             {/* Mission & Vision */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl mb-10">
                 {contents.map((content) => (
                     <div
                         key={content.id}
-                        className="flex flex-col p-6 rounded-lg shadow-md bg-[#D4B03A] hover:shadow-lg transition-shadow space-y-4"
+                        className="flex flex-col p-6 rounded-lg shadow-md bg-[#D4B03A] dark:bg-amber-600 hover:shadow-lg transition-all duration-300 space-y-4 border border-amber-300 dark:border-amber-500"
                     >
-                        <h1 className="text-2xl font-bold text-[#2E4F63]">{content.title}</h1>
-                        <p className="text-[#2E4F63] leading-relaxed">{content.description}</p>
+                        <h1 className="text-2xl font-bold text-[#2E4F63] dark:text-gray-900">{content.title}</h1>
+                        <p className="text-[#2E4F63] dark:text-gray-900 leading-relaxed">{content.description}</p>
                     </div>
                 ))}
             </div>
 
             {/* Leadership Section */}
-            <h1 className="text-2xl text-center font-bold text-[#2B4468] underline">Leadership</h1>
+            <h1 className="text-2xl text-center font-bold text-[#2B4468] dark:text-blue-400 underline">Leadership</h1>
             <div className="w-full space-y-16 max-w-5xl mt-5 mb-10">
                 {identities.map((i) => (
-                    <div key={i.id} className="grid grid-cols-1 md:grid-cols-3 gap-20 p-10 rounded-xl shadow-lg bg-gray-50">
+                    <div key={i.id} className="grid grid-cols-1 md:grid-cols-3 gap-20 p-10 rounded-xl shadow-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-colors duration-200">
                         <div className="flex items-center justify-center">
                             <Image 
                                 src={i.image} 
                                 alt={i.name} 
                                 width={240}
                                 height={240}
-                                className="h-60 w-60 rounded-full object-cover"
+                                className="h-60 w-60 rounded-full object-cover border-4 border-[#2B4468] dark:border-blue-500"
                             />
                         </div>
                         <div className="flex flex-col space-y-3">
-                            <h1 className="text-[#2B4468] text-2xl font-bold">{i.name}</h1>
-                            <p className="font-light">{i.description}</p>
-                            <p className="font-bold">{i.number}</p>
-                            <p className="font-bold">{i.email}</p>
+                            <h1 className="text-[#2B4468] dark:text-blue-400 text-2xl font-bold">{i.name}</h1>
+                            <p className="font-light text-gray-700 dark:text-gray-300">{i.description}</p>
+                            <p className="font-bold text-gray-800 dark:text-gray-200">{i.number}</p>
+                            <p className="font-bold text-gray-800 dark:text-gray-200">{i.email}</p>
                         </div>
                     </div>
                 ))}

@@ -30,21 +30,21 @@ const services = [
 
 export default function ServicesPage() {
   return (
-    <div className="bg-gray-100 min-h-screen py-12 px-6">
+    <div className="bg-gray-100 dark:bg-gray-950 min-h-screen py-12 px-6 transition-colors duration-200">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-12">Our Services</h1>
+        <h1 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-gray-100">Our Services</h1>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition duration-300"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-8 text-center hover:shadow-2xl dark:hover:shadow-gray-700/70 transition-all duration-300 border border-gray-200 dark:border-gray-700 hover:scale-105"
             >
               <div className="flex justify-center mb-6">
                 {service.icon}
               </div>
-              <h2 className="text-2xl font-semibold mb-4">{service.title}</h2>
-              <p className="text-gray-600">{service.description}</p>
+              <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">{service.title}</h2>
+              <p className="text-gray-600 dark:text-gray-400">{service.description}</p>
             </div>
           ))}
         </div>
