@@ -1,38 +1,34 @@
 'use client'
-import { useThemeStore } from "@/store/theme-store";
-import { useEffect } from "react";
 import { useTheme } from 'next-themes'
 import { Moon, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
 
 function ThemeToggle() {
-    const { isDarkMode, setDarkMode } = useThemeStore();
     const { setTheme, resolvedTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
 
-    // Sync Zustand store with next-themes
     useEffect(() => {
-        if (resolvedTheme === 'dark' && !isDarkMode) {
-            setDarkMode(true);
-        } else if (resolvedTheme === 'light' && isDarkMode) {
-            setDarkMode(false);
-        }
-    }, [resolvedTheme, isDarkMode, setDarkMode]);
+        setMounted(true);
+    }, []);
 
     const handleThemeToggle = () => {
-        const newDarkMode = !isDarkMode;
-        setDarkMode(newDarkMode);
-        setTheme(newDarkMode ? 'dark' : 'light');
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+    }
+
+    if (!mounted) {
+        return <div className="h-9 w-9" />; // Placeholder to avoid hydration mismatch
     }
 
     return (
-        <button 
-            className="cursor-pointer rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+        <button
+            className="cursor-pointer rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 text-[#1e3a5f] dark:text-gray-300"
             onClick={handleThemeToggle}
             aria-label="Toggle theme"
         >
-            {isDarkMode ? (
+            {resolvedTheme === 'dark' ? (
                 <Sun className="h-5 w-5 text-yellow-400" />
             ) : (
-                <Moon className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                <Moon className="h-5 w-5 text-[#1e3a5f]" />
             )}
         </button>
     );

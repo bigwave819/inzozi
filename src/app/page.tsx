@@ -1,138 +1,159 @@
-// app/page.tsx
-import { Rocket, Code, Server, Shield, Sprout, Music2, Ticket, Boxes, Car } from "lucide-react";
-import Image from "next/image";
+"use client";
+
+import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { Card } from "@/components/ui/card";
+import { usePortfolioData } from "@/hooks/useData";
+import { CreditCard, Activity, Globe, BarChart3, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
-  const features = [
-    { icon: <Rocket className="w-8 h-8 text-amber-400" />, title: "Innovative Solutions", description: "Cutting-edge technology tailored to your business needs" },
-    { icon: <Code className="w-8 h-8 text-teal-300" />, title: "Quality Code", description: "Clean, maintainable, and scalable software architecture" },
-    { icon: <Server className="w-8 h-8 text-rose-300" />, title: "Robust Infrastructure", description: "Reliable cloud and on-premise deployment options" },
-    { icon: <Shield className="w-8 h-8 text-emerald-300" />, title: "Secure Systems", description: "Enterprise-grade security for your peace of mind" },
-  ];
+  const { features, techStack, isLoading } = usePortfolioData();
 
-  const products = [
-    { title: "Menya Muhinzi", description: "A platform dedicated to agriculture, helping farmers access resources, tips, and market connections.", icon: Sprout, color: "#16A34A" },
-    { title: "Bruce Melody", description: "A modern web platform for uploading and sharing music videos and branded merchandise.", icon: Music2, color: "#2563EB" },
-    { title: "Itike", description: "An online ticketing system for convenient and secure event and transport ticket payments.", icon: Ticket, color: "#EA580C" },
-    { title: "Genzura", description: "A management tool that helps organizations efficiently track and maintain their assets.", icon: Boxes, color: "#9333EA" },
-    { title: "Zenguruka Umujyi", description: "A smart platform that connects drivers and clients across Kigali and other Rwandan cities.", icon: Car, color: "#DC2626" },
+  // Map backend mock icon indices to actual Lucide icons for the UI
+  const featureIcons = [
+    <CreditCard key="credit" />,
+    <Activity key="activity" />,
+    <Globe key="globe" />,
+    <BarChart3 key="bar" />
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-200">
-      {/* Hero Section */}
-      <section className="text-white pt-24 pb-16 px-4 sm:px-6 lg:px-8 w-full mx-auto bg-[#2B4468] dark:bg-gradient-to-br dark:from-gray-900 dark:via-blue-900 dark:to-purple-900 transition-all duration-500">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          <div className="lg:w-1/2 space-y-6">
-            <h1 className="text-4xl sm:text-5xl font-bold leading-tight">
-              Building <span className="text-amber-400 dark:text-amber-300">Digital Futures</span> with Inzozi Labs
-            </h1>
-            <p className="text-xl text-gray-300 dark:text-gray-200">
-              We craft exceptional software solutions that drive growth and innovation for forward-thinking businesses.
+    <div className="w-full flex-col flex animate-in fade-in duration-500">
+      {/* 1. Hero Section */}
+      <SectionWrapper background="dark-blue" className="pt-32 pb-40 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/20 blur-[100px] rounded-full pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto space-y-8">
+          <div className="inline-flex items-center px-3 py-1.5 rounded-full border border-blue-400/30 bg-blue-400/10 text-blue-200 text-sm font-medium mb-4 tracking-wide">
+            Next Generation Payment Solutions
+          </div>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
+            Secure Government <span className="text-blue-400">Payment System</span>
+          </h1>
+          <p className="text-xl text-blue-100/80 max-w-2xl leading-relaxed">
+            A robust, scalable platform designed to streamline bill management and digital services with enterprise-grade reliability.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-4 pt-8">
+            <Link
+              href="#about"
+              className="px-8 py-4 bg-white text-[#1e3a5f] font-semibold rounded-xl hover:bg-gray-100 transition-colors duration-200 shadow-lg hover:shadow-xl w-full sm:w-auto"
+            >
+              Explore Project
+            </Link>
+            <Link
+              href="/contact"
+              className="px-8 py-4 bg-transparent border border-white/30 text-white font-semibold rounded-xl hover:bg-white/10 transition-colors duration-200 w-full sm:w-auto flex items-center justify-center gap-2"
+            >
+              Contact Us <ArrowRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </SectionWrapper>
+
+      {/* 2. About Project */}
+      <SectionWrapper id="about" background="white">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="space-y-6">
+            <h2 className="text-sm font-bold uppercase tracking-widest text-[#1e3a5f] dark:text-blue-400">About The Project</h2>
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white leading-tight">
+              Simplifying Digital Payments at Scale
+            </h3>
+            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed pt-2">
+              Our platform bridges the gap between citizens and government services. By providing a unified interface for bills management and secure transactions, we eliminate the friction in public revenue collection.
             </p>
-            <div className="flex gap-4 pt-4 flex-wrap">
-              <button className="bg-amber-400 hover:bg-amber-500 dark:bg-amber-500 dark:hover:bg-amber-600 text-gray-900 font-medium py-3 px-6 rounded-lg transition-all duration-200 hover:scale-105 transform">
-                Get Started
-              </button>
-              <button className="border border-white hover:bg-white/10 dark:border-gray-300 dark:hover:bg-gray-800 text-white dark:text-gray-100 font-medium py-3 px-6 rounded-lg transition-all duration-200 hover:scale-105 transform">
-                <Link href={"/contact"}>Contact Us</Link>
-              </button>
+            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+              Designed from the ground up for maximum throughput, the system ensures real-time updates and high availability for both end-users and administrators.
+            </p>
+          </div>
+          <div className="relative h-[400px] w-full rounded-3xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden flex items-center justify-center">
+            {/* Minimal abstract representation instead of a complex graphic */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-white dark:from-gray-800 dark:to-gray-900" />
+            <div className="relative grid grid-cols-2 gap-4 p-8 w-full max-w-sm">
+              <div className="h-24 bg-white dark:bg-gray-700 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-600 animate-pulse" />
+              <div className="h-24 bg-[#1e3a5f] dark:bg-blue-600 rounded-2xl shadow-sm" />
+              <div className="h-24 bg-blue-100 dark:bg-blue-900/50 rounded-2xl shadow-sm border border-blue-200 dark:border-blue-800" />
+              <div className="h-24 bg-white dark:bg-gray-700 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-600" />
             </div>
           </div>
+        </div>
+      </SectionWrapper>
 
-          <div className="lg:w-1/2 flex justify-center w-full">
-            <div className="relative w-full max-w-md h-64 sm:h-80 md:h-[400px] lg:h-[450px]">
-              <Image
-                src="/images/profile/here.png"
-                alt="Technology illustration"
-                fill
-                className="object-contain rounded-xl dark:brightness-110 dark:saturate-110 transition-all duration-500"
-                priority
+      {/* 3. Features Section */}
+      <SectionWrapper background="light-gray">
+        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+          <h2 className="text-sm font-bold uppercase tracking-widest text-[#1e3a5f] dark:text-blue-400">Core Features</h2>
+          <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Everything required for modern payment tracking</h3>
+        </div>
+
+        {isLoading ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-64 bg-gray-200 dark:bg-gray-800 rounded-2xl animate-pulse" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, idx) => (
+              <Card
+                key={idx}
+                title={feature.title}
+                description={feature.description}
+                icon={featureIcons[feature.iconIndex]}
               />
-              {/* Glow effect for dark mode */}
-              <div className="absolute inset-0 bg-blue-400/10 dark:bg-blue-500/20 rounded-xl blur-xl opacity-50 dark:opacity-70 transition-all duration-500" />
-            </div>
+            ))}
           </div>
-        </div>
-      </section>
+        )}
+      </SectionWrapper>
 
-      {/* About Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 rounded-xl">
-        <div className="lg:w-1/2">
-          <h2 className="text-3xl font-bold text-[#2B4468] dark:text-blue-400 mb-4">About Inzozi Labs</h2>
-          <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-            At Inzozi Labs, we are passionate about turning ideas into impactful digital solutions. From SaaS platforms to IoT innovations, our team combines creativity, technical expertise, and business insight to craft products that empower businesses and delight users. We believe in clean code, robust infrastructure, and secure systems that scale as your vision grows.
-          </p>
-          <p className="text-gray-700 dark:text-gray-300 text-lg mt-4 leading-relaxed">
-            Our mission is to help companies navigate the digital future with confidence, providing innovative solutions that drive efficiency, growth, and transformation.
+      {/* 4. Tech Stack Section */}
+      <SectionWrapper background="white">
+        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+          <h2 className="text-sm font-bold uppercase tracking-widest text-[#1e3a5f] dark:text-blue-400">Upcoming Architecture</h2>
+          <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Powered by a robust Tech Stack</h3>
+          <p className="text-gray-600 dark:text-gray-400 pt-2">
+            Configured with clean architecture to allow seamless enterprise integration with backend services.
           </p>
         </div>
 
-        <div className="lg:w-1/2 flex justify-center w-full">
-          <div className="relative w-full max-w-md h-64 sm:h-80 md:h-[400px] lg:h-[450px]">
-            <Image
-              src="/about.png"
-              alt="About Inzozi Labs"
-              fill
-              className="object-contain rounded-xl"
-            />
+        {isLoading ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="h-32 bg-gray-100 dark:bg-gray-800 rounded-2xl animate-pulse" />
+            ))}
           </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-gray-50 dark:bg-gray-900 rounded-xl">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Why Choose Inzozi Labs</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            We combine technical excellence with business understanding to deliver real results.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <div 
-              key={index} 
-              className="bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-800/30 p-6 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-amber-400 dark:hover:border-amber-400 transition-all duration-300 hover:scale-105"
-            >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">{feature.title}</h3>
-              <p className="text-gray-600 dark:text-gray-400">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Products Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-950">
-        <div className="max-w-7xl mx-auto text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">Our Products</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Explore our range of innovative products designed to empower your business.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          {products.map((product, index) => (
-            <div 
-              key={index} 
-              className="bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-800/30 rounded-2xl p-8 flex flex-col items-center text-center hover:shadow-2xl dark:hover:shadow-gray-700/50 transition-all duration-300 hover:scale-105 border border-gray-200 dark:border-gray-700"
-            >
-              {/* Icon in Circle */}
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6" style={{ backgroundColor: product.color }}>
-                <product.icon className="w-10 h-10 text-white" />
+        ) : (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            {techStack.map((tech, idx) => (
+              <div key={idx} className="bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-2xl p-6 text-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200">
+                <h4 className="font-bold text-lg text-gray-900 dark:text-gray-100">{tech.name}</h4>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">{tech.type}</p>
               </div>
+            ))}
+          </div>
+        )}
+      </SectionWrapper>
 
-              {/* Title */}
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-3">{product.title}</h3>
-
-              {/* Description */}
-              <p className="text-gray-600 dark:text-gray-400">{product.description}</p>
+      {/* 5. Call to Action */}
+      <SectionWrapper background="light-gray" className="py-32">
+        <div className="bg-[#1e3a5f] dark:bg-gray-900 rounded-[2.5rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl border border-[#2a4d7a] dark:border-gray-800">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent pointer-events-none" />
+          <div className="relative z-10 max-w-2xl mx-auto space-y-8">
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight">Ready to transform your digital services?</h2>
+            <p className="text-xl text-blue-100/90 leading-relaxed">
+              Contact us to learn more about our implementation and how it can scale for your enterprise needs.
+            </p>
+            <div className="pt-4">
+              <Link
+                href="/contact"
+                className="inline-flex px-10 py-5 bg-white text-[#1e3a5f] font-bold rounded-xl hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+              >
+                Get In Touch
+              </Link>
             </div>
-          ))}
+          </div>
         </div>
-      </section>
+      </SectionWrapper>
     </div>
   );
 }

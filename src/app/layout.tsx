@@ -14,6 +14,15 @@ const quicksand = Quicksand({
 export const metadata: Metadata = {
   title: "Inzozi Labs - Innovative Software Solutions",
   description: "Discover innovative products from Inzozi Labs, including SAAS, DAAS, Digital Payment solutions, IoT platforms, and more.",
+  keywords: ["Inzozi Labs", "Software Solutions", "Digital Payment", "IoT", "SAAS", "Web Development"],
+  openGraph: {
+    title: "Inzozi Labs - Innovative Software Solutions",
+    description: "Discover innovative products from Inzozi Labs, including SAAS, DAAS, Digital Payment solutions, IoT platforms, and more.",
+    type: "website",
+  },
+  verification: {
+    google: "w6rW1HGA8IWk2ZTY54QIK_FZudpnx0gA-b1FcsQOP2E",
+  },
 };
 
 export default function RootLayout({
