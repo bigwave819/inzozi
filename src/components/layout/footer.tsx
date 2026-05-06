@@ -1,96 +1,84 @@
-import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import Link from 'next/link'
 
 export default function Footer() {
-    const navItems = [
-        { name: 'Home', path: '/' },
-        { name: 'Contact', path: '/contact' }
-    ];
+  const year = new Date().getFullYear()
 
-    const socialLinks = [
-        { icon: <Facebook size={20} />, url: 'https://facebook.com', label: "Facebook" },
-        { icon: <Twitter size={20} />, url: 'https://twitter.com', label: "Twitter" },
-        { icon: <Instagram size={20} />, url: 'https://instagram.com', label: "Instagram" },
-        { icon: <Linkedin size={20} />, url: 'https://linkedin.com', label: "LinkedIn" }
-    ];
+  return (
+    <footer style={{
+      background: '#020205', borderTop: '1px solid rgba(0,212,255,0.08)',
+      padding: '4rem 2rem 2rem', position: 'relative', overflow: 'hidden'
+    }}>
+      {/* Grid background */}
+      <div className="grid-bg" style={{ position: 'absolute', inset: 0, opacity: 0.4, pointerEvents: 'none' }} />
 
-    return (
-        <footer className="w-full text-white bg-[#1e3a5f] dark:bg-gray-950 transition-colors duration-200 border-t border-[#2a4d7a] dark:border-gray-800">
-            <div className="container mx-auto px-4 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-                    {/* Brand */}
-                    <div className="space-y-4">
-                        <h3 className="text-xl font-bold tracking-tight text-white">Inzozi Labs</h3>
-                        <p className="opacity-80 text-sm leading-relaxed max-w-xs">
-                            We build modern, scalable software solutions that drive growth and innovation for forward-thinking startups and enterprises.
-                        </p>
-                    </div>
-
-                    {/* Navigation Links */}
-                    <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">Company</h3>
-                        <ul className="space-y-3">
-                            {navItems.map((item) => (
-                                <li key={item.name}>
-                                    <Link href={item.path} className="text-sm opacity-80 hover:opacity-100 hover:text-blue-300 transition-colors duration-200">
-                                        {item.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Contact Information */}
-                    <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">Contact Us</h3>
-                        <div className="space-y-4 text-sm opacity-80">
-                            <div className="flex items-start gap-3 hover:text-blue-300 transition-colors duration-200">
-                                <Mail size={18} className="mt-0.5 flex-shrink-0" />
-                                <span>info@inzozilabs.com</span>
-                            </div>
-                            <div className="flex items-start gap-3 hover:text-blue-300 transition-colors duration-200">
-                                <Phone size={18} className="mt-0.5 flex-shrink-0" />
-                                <span>+250 798 342 542</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                                <MapPin size={18} className="mt-0.5 flex-shrink-0" />
-                                <span>Kigali, Rwanda</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Social Links */}
-                    <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">Follow Us</h3>
-                        <div className="flex gap-4">
-                            {socialLinks.map((social, index) => (
-                                <a
-                                    key={index}
-                                    href={social.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="p-2 rounded-full bg-white/10 hover:bg-blue-500 hover:scale-110 transition-all duration-200"
-                                    aria-label={social.label}
-                                >
-                                    {social.icon}
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+      <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '3rem', marginBottom: '3rem' }}>
+          {/* Brand */}
+          <div>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', letterSpacing: '0.08em', color: '#f0ede8', marginBottom: '1rem' }}>
+              INZOZI LABS
+            </h3>
+            <p style={{ color: 'rgba(240,237,232,0.5)', fontSize: '0.875rem', lineHeight: 1.7, maxWidth: 250 }}>
+              Turning bold ideas into insane digital experiences. Building the future, one pixel at a time.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+              {['Twitter', 'LinkedIn', 'GitHub', 'Dribbble'].map(s => (
+                <a key={s} href="#" aria-label={s} style={{ color: 'rgba(240,237,232,0.3)', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', textDecoration: 'none', transition: 'color 0.3s' }}
+                  onMouseEnter={e => (e.target as HTMLElement).style.color = '#00d4ff'}
+                  onMouseLeave={e => (e.target as HTMLElement).style.color = 'rgba(240,237,232,0.3)'}
+                >{s}</a>
+              ))}
             </div>
+          </div>
 
-            <div className="border-t border-white/10">
-                <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-sm opacity-60">
-                        © {new Date().getFullYear()} Inzozi labs. All rights reserved.
-                    </p>
-                    <div className="flex gap-4 text-sm opacity-60">
-                        <span className="hover:opacity-100 cursor-pointer">Privacy Policy</span>
-                        <span className="hover:opacity-100 cursor-pointer">Terms of Service</span>
-                    </div>
-                </div>
+          {/* Links */}
+          <div>
+            <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#00d4ff', marginBottom: '1.5rem' }}>Navigate</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {[['/', 'Home'], ['/about', 'About'], ['/services', 'Services'], ['/work', 'Work'], ['/contact', 'Contact']].map(([href, label]) => (
+                <Link key={href} href={href} className="link-underline" style={{ color: 'rgba(240,237,232,0.5)', textDecoration: 'none', fontSize: '0.875rem', width: 'fit-content', transition: 'color 0.3s' }}>{label}</Link>
+              ))}
             </div>
-        </footer>
-    );
+          </div>
+
+          {/* Services */}
+          <div>
+            <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#39ff14', marginBottom: '1.5rem' }}>Services</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {['Mobile Apps', 'Web Apps', 'UI/UX Design', 'API Development', 'Cloud Solutions', 'Consulting'].map(s => (
+                <span key={s} style={{ color: 'rgba(240,237,232,0.5)', fontSize: '0.875rem' }}>{s}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#ffaa00', marginBottom: '1.5rem' }}>Get In Touch</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <a href="mailto:hello@inzozilabs.com" style={{ color: 'rgba(240,237,232,0.5)', fontSize: '0.875rem', textDecoration: 'none' }}>hello@inzozilabs.com</a>
+              <span style={{ color: 'rgba(240,237,232,0.5)', fontSize: '0.875rem' }}>Kigali, Rwanda</span>
+              <Link href="/contact" style={{
+                marginTop: '0.5rem', padding: '0.6rem 1.2rem', background: '#ffaa00',
+                color: '#020205', fontSize: '0.8rem', fontFamily: 'var(--font-mono)',
+                letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none',
+                display: 'inline-block', fontWeight: 700
+              }}>
+                Start a Project →
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div style={{ borderTop: '1px solid rgba(0,212,255,0.06)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'rgba(240,237,232,0.3)', letterSpacing: '0.1em' }}>
+            © {year} INZOZI LABS. ALL RIGHTS RESERVED.
+          </p>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'rgba(240,237,232,0.3)', letterSpacing: '0.1em' }}>
+            BUILT WITH ♦ IN KIGALI
+          </p>
+        </div>
+      </div>
+    </footer>
+  )
 }

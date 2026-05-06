@@ -1,44 +1,54 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Header from "@/components/layout/header";
-import Footer from "@/components/layout/footer";
-import { Quicksand } from "next/font/google";
-import { ThemeProvider } from "next-themes";
+import type { Metadata, Viewport } from 'next'
+import './globals.css'
+import Navbar from '@/components/layout/Navbar'
+import Footer from '@/components/layout/Footer'
+import CustomCursor from '@/components/ui/Customcursor'
 
-const quicksand = Quicksand({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
+const siteUrl = 'https://inzozilabs.com'
 
 export const metadata: Metadata = {
-  title: "Inzozi Labs - Innovative Software Solutions",
-  description: "Discover innovative products from Inzozi Labs, including SAAS, DAAS, Digital Payment solutions, IoT platforms, and more.",
-  keywords: ["Inzozi Labs", "Software Solutions", "Digital Payment", "IoT", "SAAS", "Web Development"],
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Inzozi Labs — We Build Digital Futures',
+    template: '%s | Inzozi Labs'
+  },
+  description: 'Inzozi Labs is a software development company crafting world-class mobile & web applications. We turn ambitious ideas into insane digital experiences.',
+  keywords: ['software development','mobile app development','web application development','React Native','Next.js','Flutter','Rwanda tech','Kigali software','Inzozi Labs'],
+  authors: [{ name: 'Inzozi Labs', url: siteUrl }],
+  creator: 'Inzozi Labs',
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
   openGraph: {
-    title: "Inzozi Labs - Innovative Software Solutions",
-    description: "Discover innovative products from Inzozi Labs, including SAAS, DAAS, Digital Payment solutions, IoT platforms, and more.",
-    type: "website",
+    type: 'website', locale: 'en_US', url: siteUrl, siteName: 'Inzozi Labs',
+    title: 'Inzozi Labs — We Build Digital Futures',
+    description: 'Crafting world-class mobile & web applications.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Inzozi Labs' }]
   },
-  verification: {
-    google: "google-site-verification=w6rW1HGA8IWk2ZTY54QIK_FZudpnx0gA-b1FcsQOP2E",
-  },
-};
+  twitter: { card: 'summary_large_image', title: 'Inzozi Labs', description: 'Crafting world-class digital experiences.', images: ['/og-image.png'] },
+  alternates: { canonical: siteUrl }
+}
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = { themeColor: '#020205', colorScheme: 'dark', width: 'device-width', initialScale: 1 }
+
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Organization',
+  name: 'Inzozi Labs', url: siteUrl, logo: `${siteUrl}/logo.png`,
+  description: 'Software development company specializing in mobile and web applications.',
+  address: { '@type': 'PostalAddress', addressLocality: 'Kigali', addressCountry: 'RW' },
+  contactPoint: { '@type': 'ContactPoint', contactType: 'customer service', email: 'hello@inzozilabs.com' }
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={quicksand.className} suppressHydrationWarning>
-      <body className="bg-white dark:bg-gray-950 transition-colors duration-200">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </ThemeProvider>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      </head>
+      <body>
+        <CustomCursor />
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
-  );
+  )
 }

@@ -1,159 +1,197 @@
-"use client";
+'use client'
+import { useEffect, useRef } from 'react'
+import Link from 'next/link'
 
-import { SectionWrapper } from "@/components/ui/SectionWrapper";
-import { Card } from "@/components/ui/card";
-import { usePortfolioData } from "@/hooks/useData";
-import { CreditCard, Activity, Globe, BarChart3, ArrowRight } from "lucide-react";
-import Link from "next/link";
+export default function HeroSection() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
 
-export default function Home() {
-  const { features, techStack, isLoading } = usePortfolioData();
+  // Particle field
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
 
-  // Map backend mock icon indices to actual Lucide icons for the UI
-  const featureIcons = [
-    <CreditCard key="credit" />,
-    <Activity key="activity" />,
-    <Globe key="globe" />,
-    <BarChart3 key="bar" />
-  ];
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight }
+    resize()
+    window.addEventListener('resize', resize)
+
+    const particles: { x: number; y: number; vx: number; vy: number; size: number; alpha: number; color: string }[] = []
+    const colors = ['#00d4ff', '#39ff14', '#ffaa00', '#ff006e', '#7b2fff']
+
+    for (let i = 0; i < 120; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        size: Math.random() * 2 + 0.5,
+        alpha: Math.random() * 0.6 + 0.1,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      })
+    }
+
+    let animId: number
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      particles.forEach((p, i) => {
+        p.x += p.vx; p.y += p.vy
+        if (p.x < 0) p.x = canvas.width
+        if (p.x > canvas.width) p.x = 0
+        if (p.y < 0) p.y = canvas.height
+        if (p.y > canvas.height) p.y = 0
+
+        // Draw connections
+        particles.slice(i + 1).forEach(p2 => {
+          const dx = p.x - p2.x, dy = p.y - p2.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          if (dist < 120) {
+            ctx.beginPath()
+            ctx.strokeStyle = `rgba(0,212,255,${0.06 * (1 - dist / 120)})`
+            ctx.lineWidth = 0.5
+            ctx.moveTo(p.x, p.y)
+            ctx.lineTo(p2.x, p2.y)
+            ctx.stroke()
+          }
+        })
+
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+        ctx.fillStyle = p.color
+        ctx.globalAlpha = p.alpha
+        ctx.fill()
+        ctx.globalAlpha = 1
+      })
+
+      animId = requestAnimationFrame(animate)
+    }
+    animate()
+    return () => { window.removeEventListener('resize', resize); cancelAnimationFrame(animId) }
+  }, [])
+
+  // Text split animation on mount
+  useEffect(() => {
+    const el = titleRef.current
+    if (!el) return
+    const words = el.innerText.split(' ')
+    el.innerHTML = words.map((w, i) =>
+      `<span style="display:inline-block;opacity:0;transform:translateY(60px);transition:opacity 0.7s ease ${0.1 + i * 0.12}s, transform 0.7s cubic-bezier(0.25,1,0.5,1) ${0.1 + i * 0.12}s">${w}&nbsp;</span>`
+    ).join('')
+    setTimeout(() => {
+      el.querySelectorAll('span').forEach(s => {
+        (s as HTMLElement).style.opacity = '1';
+        (s as HTMLElement).style.transform = 'translateY(0)'
+      })
+    }, 100)
+  }, [])
 
   return (
-    <div className="w-full flex-col flex animate-in fade-in duration-500">
-      {/* 1. Hero Section */}
-      <SectionWrapper background="dark-blue" className="pt-32 pb-40 relative overflow-hidden">
-        {/* Subtle background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/20 blur-[100px] rounded-full pointer-events-none" />
+    <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#020205' }}>
+      {/* Particle canvas */}
+      <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, zIndex: 0 }} />
 
-        <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto space-y-8">
-          <div className="inline-flex items-center px-3 py-1.5 rounded-full border border-blue-400/30 bg-blue-400/10 text-blue-200 text-sm font-medium mb-4 tracking-wide">
-            Next Generation Payment Solutions
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
-            Secure Government <span className="text-blue-400">Payment System</span>
-          </h1>
-          <p className="text-xl text-blue-100/80 max-w-2xl leading-relaxed">
-            A robust, scalable platform designed to streamline bill management and digital services with enterprise-grade reliability.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center gap-4 pt-8">
-            <Link
-              href="#about"
-              className="px-8 py-4 bg-white text-[#1e3a5f] font-semibold rounded-xl hover:bg-gray-100 transition-colors duration-200 shadow-lg hover:shadow-xl w-full sm:w-auto"
-            >
-              Explore Project
-            </Link>
-            <Link
-              href="/contact"
-              className="px-8 py-4 bg-transparent border border-white/30 text-white font-semibold rounded-xl hover:bg-white/10 transition-colors duration-200 w-full sm:w-auto flex items-center justify-center gap-2"
-            >
-              Contact Us <ArrowRight size={18} />
-            </Link>
-          </div>
-        </div>
-      </SectionWrapper>
+      {/* Radial glow */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1,
+        background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,212,255,0.06) 0%, transparent 70%)',
+        pointerEvents: 'none'
+      }} />
 
-      {/* 2. About Project */}
-      <SectionWrapper id="about" background="white">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div className="space-y-6">
-            <h2 className="text-sm font-bold uppercase tracking-widest text-[#1e3a5f] dark:text-blue-400">About The Project</h2>
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white leading-tight">
-              Simplifying Digital Payments at Scale
-            </h3>
-            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed pt-2">
-              Our platform bridges the gap between citizens and government services. By providing a unified interface for bills management and secure transactions, we eliminate the friction in public revenue collection.
-            </p>
-            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-              Designed from the ground up for maximum throughput, the system ensures real-time updates and high availability for both end-users and administrators.
-            </p>
-          </div>
-          <div className="relative h-[400px] w-full rounded-3xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden flex items-center justify-center">
-            {/* Minimal abstract representation instead of a complex graphic */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-white dark:from-gray-800 dark:to-gray-900" />
-            <div className="relative grid grid-cols-2 gap-4 p-8 w-full max-w-sm">
-              <div className="h-24 bg-white dark:bg-gray-700 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-600 animate-pulse" />
-              <div className="h-24 bg-[#1e3a5f] dark:bg-blue-600 rounded-2xl shadow-sm" />
-              <div className="h-24 bg-blue-100 dark:bg-blue-900/50 rounded-2xl shadow-sm border border-blue-200 dark:border-blue-800" />
-              <div className="h-24 bg-white dark:bg-gray-700 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-600" />
-            </div>
-          </div>
-        </div>
-      </SectionWrapper>
+      {/* Chapter number */}
+      <div style={{
+        position: 'absolute', top: '6rem', left: '2rem', zIndex: 2,
+        fontFamily: 'var(--font-mono)', fontSize: '0.7rem', letterSpacing: '0.3em',
+        color: 'rgba(0,212,255,0.4)', textTransform: 'uppercase'
+      }}>
+        001 / INTRODUCTION
+      </div>
 
-      {/* 3. Features Section */}
-      <SectionWrapper background="light-gray">
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-[#1e3a5f] dark:text-blue-400">Core Features</h2>
-          <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Everything required for modern payment tracking</h3>
+      {/* Main content */}
+      <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 1.5rem', maxWidth: 1100 }}>
+        {/* Eyebrow */}
+        <div style={{
+          display: 'inline-flex', alignItems: 'center', gap: '0.75rem',
+          marginBottom: '2rem', padding: '0.4rem 1rem',
+          border: '1px solid rgba(0,212,255,0.2)', borderRadius: '100px',
+          background: 'rgba(0,212,255,0.04)'
+        }}>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#39ff14', display: 'block', boxShadow: '0 0 8px #39ff14' }} />
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', letterSpacing: '0.2em', color: 'rgba(240,237,232,0.6)', textTransform: 'uppercase' }}>
+            Software Development Studio · Kigali, Rwanda
+          </span>
         </div>
 
-        {isLoading ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-64 bg-gray-200 dark:bg-gray-800 rounded-2xl animate-pulse" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, idx) => (
-              <Card
-                key={idx}
-                title={feature.title}
-                description={feature.description}
-                icon={featureIcons[feature.iconIndex]}
-              />
-            ))}
-          </div>
-        )}
-      </SectionWrapper>
+        {/* Main headline */}
+        <h1
+          ref={titleRef}
+          style={{
+            fontFamily: 'var(--font-display)', fontSize: 'clamp(4rem,11vw,10rem)',
+            lineHeight: 0.9, letterSpacing: '-0.02em', color: '#f0ede8',
+            marginBottom: '2rem', overflow: 'hidden'
+          }}
+        >
+          WE BUILD DIGITAL FUTURES
+        </h1>
 
-      {/* 4. Tech Stack Section */}
-      <SectionWrapper background="white">
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-[#1e3a5f] dark:text-blue-400">Upcoming Architecture</h2>
-          <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Powered by a robust Tech Stack</h3>
-          <p className="text-gray-600 dark:text-gray-400 pt-2">
-            Configured with clean architecture to allow seamless enterprise integration with backend services.
-          </p>
+        {/* Colored sub-headline */}
+        <p style={{
+          fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem,4vw,3.5rem)',
+          letterSpacing: '0.04em', marginBottom: '1.5rem'
+        }}>
+          <span className="gradient-text">MOBILE · WEB · EVERYTHING INSANE</span>
+        </p>
+
+        {/* Description */}
+        <p style={{
+          color: 'rgba(240,237,232,0.55)', fontSize: 'clamp(0.9rem,1.5vw,1.1rem)',
+          maxWidth: 540, margin: '0 auto 3rem', lineHeight: 1.8, fontWeight: 300
+        }}>
+          Inzozi Labs is the studio that turns your most ambitious product ideas into reality. We speak React Native, Flutter, Next.js, and a dozen other languages fluently.
+        </p>
+
+        {/* CTAs */}
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link href="/work" style={{
+            padding: '1rem 2.5rem', background: '#00d4ff', color: '#020205',
+            textDecoration: 'none', fontFamily: 'var(--font-mono)', fontSize: '0.85rem',
+            letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 700,
+            transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+            boxShadow: '0 0 30px rgba(0,212,255,0.3)'
+          }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 40px rgba(0,212,255,0.5)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 30px rgba(0,212,255,0.3)' }}
+          >
+            See Our Work
+          </Link>
+          <Link href="/contact" style={{
+            padding: '1rem 2.5rem', border: '1px solid rgba(240,237,232,0.2)',
+            color: '#f0ede8', textDecoration: 'none', fontFamily: 'var(--font-mono)',
+            fontSize: '0.85rem', letterSpacing: '0.12em', textTransform: 'uppercase',
+            transition: 'border-color 0.3s, background 0.3s'
+          }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = '#00d4ff'; (e.currentTarget as HTMLElement).style.background = 'rgba(0,212,255,0.05)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(240,237,232,0.2)'; (e.currentTarget as HTMLElement).style.background = 'transparent' }}
+          >
+            Start a Project →
+          </Link>
         </div>
+      </div>
 
-        {isLoading ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="h-32 bg-gray-100 dark:bg-gray-800 rounded-2xl animate-pulse" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            {techStack.map((tech, idx) => (
-              <div key={idx} className="bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-2xl p-6 text-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200">
-                <h4 className="font-bold text-lg text-gray-900 dark:text-gray-100">{tech.name}</h4>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">{tech.type}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </SectionWrapper>
+      {/* Scroll indicator */}
+      <div style={{
+        position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', zIndex: 2
+      }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.25em', color: 'rgba(240,237,232,0.3)', textTransform: 'uppercase' }}>Scroll</span>
+        <div style={{ width: 1, height: 50, background: 'linear-gradient(to bottom, rgba(0,212,255,0.5), transparent)', animation: 'float 2s ease-in-out infinite' }} />
+      </div>
 
-      {/* 5. Call to Action */}
-      <SectionWrapper background="light-gray" className="py-32">
-        <div className="bg-[#1e3a5f] dark:bg-gray-900 rounded-[2.5rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl border border-[#2a4d7a] dark:border-gray-800">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent pointer-events-none" />
-          <div className="relative z-10 max-w-2xl mx-auto space-y-8">
-            <h2 className="text-3xl md:text-5xl font-bold leading-tight">Ready to transform your digital services?</h2>
-            <p className="text-xl text-blue-100/90 leading-relaxed">
-              Contact us to learn more about our implementation and how it can scale for your enterprise needs.
-            </p>
-            <div className="pt-4">
-              <Link
-                href="/contact"
-                className="inline-flex px-10 py-5 bg-white text-[#1e3a5f] font-bold rounded-xl hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
-              >
-                Get In Touch
-              </Link>
-            </div>
-          </div>
-        </div>
-      </SectionWrapper>
-    </div>
-  );
+      {/* Corner decorations */}
+      <div style={{ position: 'absolute', top: '5rem', right: '2rem', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.2em', color: 'rgba(57,255,20,0.3)', textTransform: 'uppercase', zIndex: 2 }}>
+        EST. 2024
+      </div>
+    </section>
+  )
 }
