@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 
 export default function Footer() {
@@ -23,10 +24,7 @@ export default function Footer() {
             </p>
             <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
               {['Twitter', 'LinkedIn', 'GitHub', 'Dribbble'].map(s => (
-                <a key={s} href="#" aria-label={s} style={{ color: 'rgba(240,237,232,0.3)', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', textDecoration: 'none', transition: 'color 0.3s' }}
-                  onMouseEnter={e => (e.target as HTMLElement).style.color = '#00d4ff'}
-                  onMouseLeave={e => (e.target as HTMLElement).style.color = 'rgba(240,237,232,0.3)'}
-                >{s}</a>
+                <a key={s} href="#" aria-label={s} className="footer-social-link">{s}</a>
               ))}
             </div>
           </div>
