@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/:path*", "destination": "https://inzozilabs.dev/:path*", "permanent": true }
+  ]
+}
