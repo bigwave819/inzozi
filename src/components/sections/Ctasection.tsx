@@ -22,7 +22,7 @@ export default function CtaSection() {
     }}>
       {/* Chapter label */}
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', letterSpacing: '0.3em', color: 'rgba(255,0,110,0.4)', textTransform: 'uppercase', marginBottom: '3rem' }}>
-        008 / FINALE
+        009 / FINALE
       </div>
 
       {/* Glowing orb */}

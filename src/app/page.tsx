@@ -3,6 +3,7 @@ import HeroSection from '@/components/sections/Herosection'
 import ManifestoSection from '@/components/sections/Manifestosection'
 import ServicesSection from '@/components/sections/Servicessection'
 import ProcessSection from '@/components/sections/Processsection '
+import ProductsSection from '@/components/sections/ProductsSection'
 import WorkSection from '@/components/sections/Worksection'
 import TechSection from '@/components/sections/Techsection'
 import TestimonialsSection from '@/components/sections/Testimonialssection'
@@ -20,6 +21,7 @@ export default function HomePage() {
       <ManifestoSection />
       <ServicesSection />
       <ProcessSection />
+      <ProductsSection />
       <WorkSection />
       <TechSection />
       <TestimonialsSection />

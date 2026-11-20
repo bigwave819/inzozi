@@ -170,7 +170,7 @@ export default function WorkSection() {
     }}>
       {/* Chapter label */}
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', letterSpacing: '0.3em', color: 'rgba(255,0,110,0.4)', textTransform: 'uppercase', marginBottom: '3rem' }}>
-        005 / SELECTED WORK
+        006 / SELECTED WORK
       </div>
 
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>

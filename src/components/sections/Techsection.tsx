@@ -56,7 +56,7 @@ export default function TechSection() {
     <section style={{ padding: 'clamp(6rem,10vw,8rem) 0', background: '#020205', overflow: 'hidden' }}>
       {/* Chapter label */}
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', letterSpacing: '0.3em', color: 'rgba(123,47,255,0.4)', textTransform: 'uppercase', marginBottom: '4rem', paddingLeft: 'clamp(1.5rem,5vw,4rem)' }}>
-        006 / TECH STACK
+        007 / TECH STACK
       </div>
 
       {/* Stats */}

@@ -8,32 +8,38 @@ export const metadata: Metadata = {
 
 const projects = [
   {
-    num: '01', title: 'FinEdge Mobile Banking', category: 'Mobile App · Fintech', accent: '#00d4ff',
+    num: '01', title: 'Renta', category: 'SaaS · PropTech', accent: '#39ff14',
+    description: 'Rental management software for property managers in Rwanda: rent, part payments, expenses, commission and owner payouts in one ledger.',
+    tags: ['React', 'Vite', 'NestJS', 'PostgreSQL'], outcome: '● Live · 30 days free trial',
+    url: 'https://renta.inzozilabs.dev'
+  },
+  {
+    num: '02', title: 'FinEdge Mobile Banking', category: 'Mobile App · Fintech', accent: '#00d4ff',
     description: 'A full-featured mobile banking app with real-time transactions, biometric auth, and AI spending insights. 50K+ active users, 4.9 App Store rating.',
     tags: ['React Native', 'Node.js', 'PostgreSQL', 'Redis'], outcome: '50K+ users · 4.9★ rating'
   },
   {
-    num: '02', title: 'Kanda Market', category: 'Web App · E-Commerce', accent: '#39ff14',
+    num: '03', title: 'Kanda Market', category: 'Web App · E-Commerce', accent: '#39ff14',
     description: 'A multi-vendor marketplace for East African artisans. Built to handle 10x traffic spikes. Integrated M-Pesa, Stripe, and local payment gateways.',
     tags: ['Next.js', 'Stripe', 'Redis', 'AWS'], outcome: '3x conversion rate improvement'
   },
   {
-    num: '03', title: 'HealthTrack Pro', category: 'Mobile App · HealthTech', accent: '#ffaa00',
+    num: '04', title: 'HealthTrack Pro', category: 'Mobile App · HealthTech', accent: '#ffaa00',
     description: 'Wearable-connected health tracking app with AI health insights. Featured by Google Play as "Editor\'s Choice" in health category.',
     tags: ['Flutter', 'Firebase', 'TensorFlow', 'GCP'], outcome: 'Google Play Editor\'s Choice'
   },
   {
-    num: '04', title: 'DataViz SaaS Platform', category: 'Web App · SaaS', accent: '#ff006e',
+    num: '05', title: 'DataViz SaaS Platform', category: 'Web App · SaaS', accent: '#ff006e',
     description: 'White-label analytics dashboard with real-time streaming data, custom chart builders, and multi-tenant architecture.',
     tags: ['React', 'D3.js', 'WebSocket', 'Go'], outcome: '40+ business clients'
   },
   {
-    num: '05', title: 'MoveIT Logistics', category: 'Mobile + Web · Logistics', accent: '#7b2fff',
+    num: '06', title: 'MoveIT Logistics', category: 'Mobile + Web · Logistics', accent: '#7b2fff',
     description: 'End-to-end logistics management platform: driver app, client app, and admin dashboard. Real-time tracking, route optimization, invoicing.',
     tags: ['React Native', 'Next.js', 'GraphQL', 'MongoDB'], outcome: 'Serving 8 cities in Africa'
   },
   {
-    num: '06', title: 'EduRwanda LMS', category: 'Web App · EdTech', accent: '#00d4ff',
+    num: '07', title: 'EduRwanda LMS', category: 'Web App · EdTech', accent: '#00d4ff',
     description: 'A learning management system serving 12,000 students. Video streaming, live classes, progress tracking, certificate generation.',
     tags: ['Next.js', 'PostgreSQL', 'AWS S3', 'Stripe'], outcome: '12K+ students enrolled'
   },
@@ -66,7 +72,7 @@ export default function WorkPage() {
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
                   <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.8rem,3.5vw,2.8rem)', color: '#f0ede8', letterSpacing: '0.02em' }}>
-                    {project.title}
+                    {project.url ? <a href={project.url} style={{ color: 'inherit', textDecoration: 'none' }}>{project.title}</a> : project.title}
                   </h2>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: project.accent, border: `1px solid ${project.accent}30`, padding: '0.2rem 0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                     {project.category}
@@ -82,6 +88,11 @@ export default function WorkPage() {
                     </span>
                   ))}
                 </div>
+                {project.url && (
+                  <a href={project.url} style={{ display: 'inline-block', marginTop: '1.25rem', color: project.accent, textDecoration: 'none', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+                    Visit {project.title} →
+                  </a>
+                )}
               </div>
               <div style={{ textAlign: 'right', paddingTop: '0.4rem' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: project.accent, letterSpacing: '0.1em', whiteSpace: 'nowrap' }}>
