@@ -1,5 +1,4 @@
-
-# Inzozi Labs website (container from /opt/inzozi, on the renta_default network)
+# This block is appended to /opt/renta/Caddyfile (Renta's Caddy serves this site). Keep the two in sync.
 inzozilabs.dev {
 	encode zstd gzip
 	log
