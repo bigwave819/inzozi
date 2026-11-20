@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import Logo from '@/components/ui/Logo'
 
 const links = [
   { href: '/', label: 'Home' },
@@ -39,14 +40,7 @@ export default function Navbar() {
       >
         {/* Logo */}
         <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: '50%',
-            background: 'linear-gradient(135deg, #00d4ff, #39ff14)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '1rem', fontWeight: 700, color: '#020205', fontFamily: 'var(--font-display)'
-          }}>
-            IL
-          </div>
+          <Logo size={38} />
           <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', letterSpacing: '0.08em', color: '#f0ede8' }}>
             INZOZI LABS
           </span>

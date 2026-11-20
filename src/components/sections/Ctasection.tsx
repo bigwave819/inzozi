@@ -76,7 +76,7 @@ export default function CtaSection() {
           >
             Start Your Project →
           </Link>
-          <a href="mailto:hello@inzozilabs.com" style={{
+          <a href="mailto:hello@inzozilabs.dev" style={{
             padding: '1.1rem 3rem', border: '1px solid rgba(240,237,232,0.2)',
             color: '#f0ede8', textDecoration: 'none', fontFamily: 'var(--font-mono)',
             fontSize: '0.9rem', letterSpacing: '0.12em', textTransform: 'uppercase',
@@ -85,7 +85,7 @@ export default function CtaSection() {
             onMouseEnter={e => (e.currentTarget as HTMLElement).style.borderColor = 'rgba(240,237,232,0.5)'}
             onMouseLeave={e => (e.currentTarget as HTMLElement).style.borderColor = 'rgba(240,237,232,0.2)'}
           >
-            hello@inzozilabs.com
+            hello@inzozilabs.dev
           </a>
         </div>
       </div>

@@ -1,0 +1,13 @@
+
+# Inzozi Labs website (container from /opt/inzozi, on the renta_default network)
+inzozilabs.dev {
+	encode zstd gzip
+	log
+	reverse_proxy inzozi-web:3000 {
+		header_up X-Forwarded-For {client_ip}
+	}
+}
+
+www.inzozilabs.dev {
+	redir https://inzozilabs.dev{uri} permanent
+}

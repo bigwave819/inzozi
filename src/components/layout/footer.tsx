@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Logo from '@/components/ui/Logo'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -15,7 +16,8 @@ export default function Footer() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '3rem', marginBottom: '3rem' }}>
           {/* Brand */}
           <div>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', letterSpacing: '0.08em', color: '#f0ede8', marginBottom: '1rem' }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', letterSpacing: '0.08em', color: '#f0ede8', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <Logo size={40} />
               INZOZI LABS
             </h3>
             <p style={{ color: 'rgba(240,237,232,0.5)', fontSize: '0.875rem', lineHeight: 1.7, maxWidth: 250 }}>
@@ -52,7 +54,7 @@ export default function Footer() {
           <div>
             <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#ffaa00', marginBottom: '1.5rem' }}>Get In Touch</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <a href="mailto:hello@inzozilabs.com" style={{ color: 'rgba(240,237,232,0.5)', fontSize: '0.875rem', textDecoration: 'none' }}>hello@inzozilabs.com</a>
+              <a href="mailto:hello@inzozilabs.dev" style={{ color: 'rgba(240,237,232,0.5)', fontSize: '0.875rem', textDecoration: 'none' }}>hello@inzozilabs.dev</a>
               <span style={{ color: 'rgba(240,237,232,0.5)', fontSize: '0.875rem' }}>Kigali, Rwanda</span>
               <Link href="/contact" style={{
                 marginTop: '0.5rem', padding: '0.6rem 1.2rem', background: '#ffaa00',

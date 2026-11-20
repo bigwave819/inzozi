@@ -1,0 +1,18 @@
+services:
+  inzozi-web:
+    build: .
+    image: inzozi-web
+    # Unique name on purpose: Renta's network already has a service called "web",
+    # so Caddy must address this one as inzozi-web:3000.
+    container_name: inzozi-web
+    restart: unless-stopped
+    mem_limit: 256m
+    env_file: .env
+    networks: [proxy]
+    logging:
+      options: { max-size: "10m", max-file: "3" }
+
+networks:
+  proxy:
+    external: true
+    name: renta_default

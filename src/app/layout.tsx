@@ -4,7 +4,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/footer'
 import CustomCursor from '@/components/ui/Customcursor'
 
-const siteUrl = 'https://inzozilabs.com'
+const siteUrl = 'https://inzozilabs.dev'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -34,7 +34,7 @@ const jsonLd = {
   name: 'Inzozi Labs', url: siteUrl, logo: `${siteUrl}/logo.png`,
   description: 'Software development company specializing in mobile and web applications.',
   address: { '@type': 'PostalAddress', addressLocality: 'Kigali', addressCountry: 'RW' },
-  contactPoint: { '@type': 'ContactPoint', contactType: 'customer service', email: 'hello@inzozilabs.com' }
+  contactPoint: { '@type': 'ContactPoint', contactType: 'customer service', email: 'hello@inzozilabs.dev' }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

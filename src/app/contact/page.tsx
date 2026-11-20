@@ -9,13 +9,30 @@ const services = ['Mobile App', 'Web App', 'UI/UX Design', 'API/Backend', 'Cloud
 const budgets = ['< $5K', '$5K–$15K', '$15K–$50K', '$50K+', 'Let\'s discuss']
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', company: '', service: '', budget: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', company: '', service: '', budget: '', message: '', website: '' })
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
   const [focused, setFocused] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSent(true)
+    setSending(true)
+    setError('')
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.error || 'Something went wrong.')
+      setSent(true)
+    } catch (err) {
+      setError(err instanceof Error && err.message !== 'Failed to fetch' ? err.message : 'Network error. Please try again.')
+    } finally {
+      setSending(false)
+    }
   }
 
   const inputStyle = (field: string) => ({
@@ -71,7 +88,7 @@ export default function ContactPage() {
           <div>
             <div style={{ marginBottom: '3rem' }}>
               <p style={{ ...labelStyle, marginBottom: '0.75rem' }}>Email</p>
-              <a href="mailto:hello@inzozilabs.com" style={{ color: '#00d4ff', fontSize: '1rem', textDecoration: 'none', fontWeight: 500 }}>hello@inzozilabs.com</a>
+              <a href="mailto:hello@inzozilabs.dev" style={{ color: '#00d4ff', fontSize: '1rem', textDecoration: 'none', fontWeight: 500 }}>hello@inzozilabs.dev</a>
             </div>
             <div style={{ marginBottom: '3rem' }}>
               <p style={{ ...labelStyle, marginBottom: '0.75rem' }}>Location</p>
@@ -163,7 +180,20 @@ export default function ContactPage() {
               />
             </div>
 
-            <button type="submit" style={{
+            <input
+              type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true"
+              value={form.website} onChange={e => setForm({ ...form, website: e.target.value })}
+              style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+            />
+
+            {error && (
+              <p role="alert" style={{ color: '#ff006e', fontSize: '0.9rem', marginBottom: '1rem' }}>
+                {error} You can also email <a href="mailto:hello@inzozilabs.dev" style={{ color: '#00d4ff' }}>hello@inzozilabs.dev</a>.
+              </p>
+            )}
+
+            <button type="submit" disabled={sending} style={{
+              opacity: sending ? 0.6 : 1,
               width: '100%', padding: '1.2rem', background: '#ff006e', color: '#f0ede8',
               border: 'none', fontFamily: 'var(--font-mono)', fontSize: '0.9rem',
               letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 700,
@@ -173,7 +203,7 @@ export default function ContactPage() {
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 40px rgba(255,0,110,0.5)' }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 30px rgba(255,0,110,0.3)' }}
             >
-              Send Message — Let's Build →
+              {sending ? 'Sending…' : "Send Message — Let's Build →"}
             </button>
           </form>
         </div>
